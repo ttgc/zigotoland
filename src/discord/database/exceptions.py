@@ -17,8 +17,15 @@ class NoEntryFoundException(DatabaseException):
         self.entry = searching
 
 class TableDoesNotExist(DatabaseException):
-    def __init__(self,table):
+    def __init__(self,db,table):
         self.super()
+        self.database = db
+        self.table = table
+
+class TableAlreadyExist(DatabaseException):
+    def __init__(self,db,table):
+        self.super()
+        self.database = db
         self.table = table
 
 class DatabaseDoesNotExist(DatabaseException):
