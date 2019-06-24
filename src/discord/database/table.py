@@ -45,7 +45,6 @@ class Table:
 
     async def delete_row(self,identifier):
         #assume the identifier is always in the first column
-        data = await self.fetch()
         async for message in channel.history(limit=None):
             data = DataFormat.parse(message.content)
             if data[0] == identifier:
