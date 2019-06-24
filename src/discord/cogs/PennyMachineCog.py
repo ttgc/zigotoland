@@ -1,4 +1,4 @@
-
+import typing
 
 class PennyMachineCog(commands.Cog, name='PennyMachines'):
     def __init__(self, bot, logger):
@@ -17,6 +17,7 @@ class PennyMachineCog(commands.Cog, name='PennyMachines'):
 
 
     #@commands.check()
-    async def pennyMachine():
 
+    @pennyMachine.command(name ="pennyMachine" )
+    async def pennyMachine(self, ctx, bet, typing.Optional):
         message.reply(`${poop}`)
