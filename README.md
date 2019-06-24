@@ -1,0 +1,2 @@
+# zigotoland
+A discord bot
