@@ -10,6 +10,8 @@ import json
 
 from src.logs import *
 
+from src.discord.cogs.utils import *
+
 global logger
 logger = initlogs()
 
@@ -22,8 +24,20 @@ client = discord.ext.commands.Bot('/',case_insensitive=True)
 
 # Code here
 
+@client.event
+async def on_ready():
+    global logger
+    logger.info("Successful connected. Initializing bot system")
+    botaskperm = discord.Permissions().all()
+    botaskperm.administrator = botaskperm.manage_channels = botaskperm.manage_guild = botaskperm.manage_webhooks = botaskperm.manage_emojis = botaskperm.manage_nicknames = botaskperm.move_members = False
+    url = discord.utils.oauth_url(str(client.user.id),botaskperm)
+    print(url)
+    logger.info("Generate invite link : %s",url)
+    logger.info("Bot is now ready")
+
 async def main():
     global TOKEN
+    client.add_cog(Utils(client,logger))
     await client.login(TOKEN)
     await client.connect()
 
