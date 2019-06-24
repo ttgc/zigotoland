@@ -8,6 +8,7 @@ class Database:
     def __init__(self,bot,logger,servid,name):
         self.bot = bot
         self.logger = logger
+        self.name = name
         self.srv = discord.utils.get(self.bot.guilds, id=servid)
         if self.srv is None:
             raise ServerNotFoundException(servid)
@@ -39,3 +40,9 @@ class Database:
         await srv.create_category_channel(f"python.db={name}", overwrites=perms, reason="database create")
         logger.info("Create database in center %s named %s",str(srv),name)
         return cl(bot,logger,servid,name)
+
+    async def delete(self):
+        for channel in self.category.text_channels:
+            await channel.delete(reason="delete database")
+        await self.category.delete(reason="delete database")
+        self.logger.info("Delete database in center %s named %s",str(self.srv),self.name)
