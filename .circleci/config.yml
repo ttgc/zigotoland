@@ -38,7 +38,7 @@ jobs:
           name: write config
           command: |
             echo '{' > config.json
-            echo 'token='"$token" >> config.json
+            echo '"token"="'$token'"' >> config.json
             echo '}' >> config.json
 
       - run:
