@@ -23,14 +23,21 @@ while play_game:
     def fake_randomiser():
         list=[]
         for i in range(100):
-            if x = random.randint(1,100) < 3:
-                list.append(i)
-            elif x = random.randint(1,100) < 3:
-                list.append(i)
-            elif x = random.randint(1,100) < 3:
-                list.append(i)
+            x = random.randint(1,100)
+            if x <= 1:
+                list.append(7)
+            elif x <= 5:
+                list.append(6)
+            elif x <= 12:
+                list.append(5)
+            elif x <= 20:
+                list.append(4)
+            elif x <= 35:
+                list.append(3)
+            elif x <= 65:
+                list.append(2)
             else:
-                list.append(i)
+                list.append(1)
         return list
 
 
@@ -43,5 +50,17 @@ while play_game:
     #winning conditions
 
     if first_draw == second_draw and second_draw == third_draw:
-        pass
-        
+        if first_draw == 7:
+            logger.info("JACKPOT!!!")
+        elif first_draw == 6:
+            logger.info("Pas trop mal")
+        elif first_draw == 5:
+            logger.info("Peut mieux faire")
+        elif first_draw == 4:
+            logger.info("Bof")
+        elif first_draw == 3:
+            logger.info("LUL")
+        elif first_draw == 2:
+            logger.info("you loser!")
+        elif first_draw == 1:
+            logger.info("traaash")
