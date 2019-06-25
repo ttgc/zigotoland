@@ -57,6 +57,13 @@ async def on_guild_unavailable(guild):
                     cmd.update(enabled=False)
 
 @client.event
+async def on_member_join(member):
+    global logger, client, config
+    if member.guild == config.guild and member.id in config.owners:
+        await member.add_roles(config.adminrole, reason="Assigned admin role to owner")
+        logger.info("Assigned admin role to owner in self guild")
+
+@client.event
 async def on_ready():
     global logger, client, config
     # Bot invite link
@@ -67,16 +74,27 @@ async def on_ready():
     print(url)
     logger.info("Generate invite link : %s",url)
 
-    # Self guild management
+    # Self guild load/creation
     if config.guildID is None:
-        guild = await client.create_guild("Zigotoland", config.guildRegion)
+        with open("pictures/guild-logo.png","rb") as avatar:
+            guild = await client.create_guild("Financial District", config.guildRegion, avatar.read())
+        await guild.create_role(name="Masakaki", permissions=discord.Permissions.all(),
+                                color=discord.Color(int("CE618E",16)), hoist=True,
+                                mentionable=True, reason="Creating admin role")
+        logger.info("self guild %d created successful", guild.id)
     else:
         guild = discord.utils.get(client.guilds, id=config.guildID)
         if guild is None:
             logger.critical("unavalaible guild specified in config.json")
             await client.logout()
             sys.exit(1)
+        logger.info("self guild loaded successful")
     config.initGuild(guild)
+
+    # Self guild management
+    invite = await guild.text_channels[0].create_invite(max_uses=1,reason="Create admin invite")
+    logger.info("Created invite to self-guild : %s",invite.url)
+    print(invite.url)
 
     logger.info("Bot is now ready")
 

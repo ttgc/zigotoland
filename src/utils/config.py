@@ -4,6 +4,8 @@
 import json
 import discord
 
+PATH = "config.json"
+
 def singleton(class_):
     instances = {}
     def getinstance(*args, **kwargs):
@@ -14,25 +16,25 @@ def singleton(class_):
 
 @singleton
 class Config:
-    PATH = "config.json"
-
     def __init__(self):
-        with open(Config.PATH,"r") as configfile:
+        with open(PATH,"r") as configfile:
             self.config = json.load(configfile)
 
         self.token = self.config["token"]
         self.owners = self.config["owner"]
         self.guildID = None
         if self.config["self-guild"].get("mode","load") == "load":
-            self.guildID = config["self-guild"]["ID"]
-        self.guildRegion = Config.parseRegion(config["self-guild"]["region"])
+            self.guildID = self.config["self-guild"]["ID"]
+        self.guildRegion = self.parseRegion(self.config["self-guild"]["region"])
         self.guild = None
+        self.adminrole = None
 
     def __getitem__(self,item):
         return self.config[item]
 
     def initGuild(self, guild):
         self.guild = guild
+        self.adminrole = discord.utils.get(self.guild.roles, name="Masakaki")
 
     @classmethod
     def parseRegion(cl, regionString):
