@@ -8,4 +8,5 @@ def check_botowner(ctx):
     return ctx.author.id in config.owners
 
 def check_inserv(ctx):
-    return True
+    config = Config()
+    return (ctx.guild == config.guild)
