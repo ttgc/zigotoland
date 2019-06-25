@@ -38,6 +38,7 @@ class Utils(commands.Cog):
         else:
             self.logger.warning("Shutdown requested by %s",str(ctx.message.author))
             await self.bot.logout()
+            await client.close()
             sys.exit(0)
 
     @commands.check(check_botowner)
@@ -54,6 +55,7 @@ class Utils(commands.Cog):
             config = Config()
             await config.guild.delete()
             await self.bot.logout()
+            await client.close()
             sys.exit(0)
 
     @commands.command()

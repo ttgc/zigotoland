@@ -117,17 +117,23 @@ async def on_ready():
         logger.info("self guild %d created successful", guild.id)
         db = await Database.create(client,logger,guild.id,"selfguild")
         await Table.create(db,"user") # (id, money)
+        logger.warning("need reboot with 'load' option")
+        await client.logout()
+        await client.close()
+        sys.exit(0)
     else:
-        guild = discord.utils.get(client.guilds, id=config.guildID)
+        guild = client.get_guild(config.guildID)
         if guild is None:
             logger.critical("unavalaible guild specified in config.json")
             await client.logout()
+            await client.close()
             sys.exit(1)
         logger.info("self guild loaded successful")
-        invite = await guild.text_channels[0].create_invite(max_age=3600,max_uses=1,reason="Create admin invite")
-        logger.info("Created invite to self-guild : %s",invite.url)
-        print(invite.url)
     config.initGuild(guild)
+
+    invite = await guild.text_channels[0].create_invite(max_age=3600,max_uses=1,reason="Create admin invite")
+    logger.info("Created invite to self-guild : %s",invite.url)
+    print(invite.url)
 
     logger.info("Bot is now ready")
 
