@@ -10,9 +10,6 @@ class DataFormat:
     def __getitem__(self,item):
         return self.data[item]
 
-    def __setitem__(self,item,value):
-        self.data[item] = value
-
     def __str__(self):
         return "|@|".join(self.data)
 

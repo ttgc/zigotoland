@@ -29,22 +29,22 @@ class Roulette(commands.Cog):
         users = await usertable.fetch()
         for user in users:
             if user[0] == str(ctx.author.id): break
-        user[1] = str(int(user[1]) - bet)
+        coins = int(user[1]) - bet
         avalaible = ["R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","R16","R17","R18",
                     "B1","B2","B3","B4","B5","B6","B7","B8","B9","B10","B11","B12","B13","B14","B15","B16","B17","B18"]
         shuffle(avalaible)
         msg = await ctx.channel.send(avalaible[0])
-        iteration = randint(20,40)
+        iteration = randint(5,15)
         while (iteration > 0):
-            msg.edit(content=avalaible[iteration%len(avalaible)])
-            await asyncio.sleep(0.25)
+            await msg.edit(content=avalaible[iteration%len(avalaible)])
+            await asyncio.sleep(0.2)
             iteration -= 1
         formated = "{}{}".format(validColor[0].upper(), validNumber)
-        msg.edit(content=formated)
+        await msg.edit(content=formated)
         await asyncio.sleep(1)
         if color == validColor and number == validNumber:
             await ctx.channel.send("You win ! you have earned : {} coins".format(bet*10))
-            user[1] = str(user[1]+(bet*10))
+            coins += (bet*10)
         else:
             await ctx.channel.send("You lose !")
-        await usertable.update_row(user[0],user[1])
+        await usertable.update_row(user[0],str(coins))

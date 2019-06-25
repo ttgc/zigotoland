@@ -54,8 +54,8 @@ class Table:
     async def update_row(self,identifier,*data):
         #assume the identifier is always in the first column
         data = DataFormat(identifier,*data)
-        async for message in channel.history(limit=None):
+        async for message in self.channel.history(limit=None):
             datadb = DataFormat.parse(message.content)
             if datadb[0] == identifier:
-                message.edit(content=str(data))
+                await message.edit(content=str(data))
         self.db.logger.info("Updated row from table %s from database %s",self.name,self.db.name)
