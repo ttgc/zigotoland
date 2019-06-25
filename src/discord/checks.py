@@ -8,3 +8,6 @@ def check_botowner(ctx):
     with open("config.json","r") as configfile:
         config = json.load(configfile)
     return ctx.author.id in config["owner"]
+
+def check_inserv(ctx):
+    return True
