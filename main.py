@@ -7,10 +7,14 @@ import asyncio
 import logging
 import os
 import json
+import typing
+import emojis #pip3 install -U emojis
+
+from src.discord.cogs.utils import *
+from src.discord.cogs.PennyMachineCog import *
 
 from src.logs import *
 
-from src.discord.cogs.utils import *
 
 global logger
 logger = initlogs()
@@ -38,12 +42,14 @@ async def on_ready():
 async def main():
     global TOKEN
     client.add_cog(Utils(client,logger))
+    client.add_cog(PennyMachines(client, logger))
     await client.login(TOKEN)
     await client.connect()
 
 loop = asyncio.get_event_loop()
 try:
     loop.run_until_complete(main())
+
 except:
     loop.run_until_complete(client.logout())
 finally:

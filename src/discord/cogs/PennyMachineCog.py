@@ -1,23 +1,43 @@
 import typing
+import discord
+import logging
+import asyncio
+import emojis
+from discord.ext import commands
+from src.games.pennyMachine.pennyMachine import *
+client = discord.Client()
 
-class PennyMachineCog(commands.Cog, name='PennyMachines'):
+class PennyMachineCog(commands.Cog):
+
     def __init__(self, bot, logger):
         self.bot = bot
         self.logger = logger
 
 
-    const cherries = client.emojis.find(emoji => emoji.name === "cherries");
-    const banana = client.emojis.find(emoji => emoji.name === "banana");
-    const kiwi = client.emojis.find(emoji => emoji.name === "kiwi");
-    const watermelon = client.emojis.find(emoji => emoji.name === "watermelon");
-    const moneybag = client.emojis.find(emoji => emoji.name === "moneybag");
-    const poop = client.emojis.find(emoji => emoji.name === "poop");
-    const monkey_face = client.emojis.find(emoji => emoji.name === "monkey_face");
-
+    # cherries = self.bot.emojis.find(emoji => emoji.name === "cherries");
+    # banana = self.bot.emojis.find(emoji => emoji.name === "banana");
+    # kiwi = self.bot.emojis.find(emoji => emoji.name === "kiwi");
+    # watermelon = self.bot.emojis.find(emoji => emoji.name === "watermelon");
+    # moneybag = self.bot.emojis.find(emoji => emoji.name === "moneybag");
+    # poop = self.bot.emojis.find(emoji => emoji.name === "poop");
+    # monkey_face = self.bot.emojis.find(emoji => emoji.name === "monkey_face");
 
 
     #@commands.check()
+    @commands.command()
+    async def pennyMachine(self, ctx, bet):
+        pass
 
-    @pennyMachine.command(name ="pennyMachine" )
-    async def pennyMachine(self, ctx, bet, typing.Optional):
-        message.reply(`${poop}`)
+    @client.event
+    async def on_message(message):
+        author = message.author
+
+    @commands.command()
+    async def start_game(self, ctx, *, member: discord.Member = None):
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
+        await bot.send_message(emojize(":poop: :poop: :poop:", use_aliases = True))
