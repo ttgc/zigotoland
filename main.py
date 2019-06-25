@@ -107,7 +107,7 @@ async def on_ready():
         with open("pictures/guild-logo.png","rb") as avatar:
             guild = await client.create_guild("Financial District", config.guildRegion, avatar.read())
         botrole = await guild.create_role(name="Midas", permissions=discord.Permissions.all(),
-                                color=discord.Color(0), hoist=True, mentionable=True,
+                                color=discord.Color.from_rgb(1,1,1), hoist=True, mentionable=True,
                                 reason="Creating bot role")
         botmember = await guild.fetch_member(client.user.id)
         await botmember.add_roles(botrole, reason="Assigned bot role to itself")
