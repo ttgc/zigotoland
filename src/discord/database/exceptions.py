@@ -8,37 +8,37 @@ class DatabaseException(Exception):
 
 class NoChannelFoundException(DatabaseException):
     def __init__(self,channel: discord.TextChannel):
-        self.super()
+        super()
         self.channel = channel
 
 class NoEntryFoundException(DatabaseException):
     def __init__(self,searching):
-        self.super()
+        super()
         self.entry = searching
 
 class TableDoesNotExist(DatabaseException):
     def __init__(self,db,table):
-        self.super()
+        super()
         self.database = db
         self.table = table
 
 class TableAlreadyExist(DatabaseException):
     def __init__(self,db,table):
-        self.super()
+        super()
         self.database = db
         self.table = table
 
 class DatabaseDoesNotExist(DatabaseException):
     def __init__(self,db):
-        self.super()
+        super()
         self.database = db
 
 class DatabaseAlreadyExist(DatabaseException):
     def __init__(self,db):
-        self.super()
+        super()
         self.database = db
 
 class ServerNotFoundException(DatabaseException):
     def __init__(self,srvid):
-        self.super()
+        super()
         self.serverID = srvid

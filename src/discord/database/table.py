@@ -14,7 +14,7 @@ class Table:
         self.channel = discord.utils.get(db.category.text_channels, name=f"{db.name}-{name}")
 
     @staticmethod
-    def exists(self,db,name):
+    def exists(db,name):
         chan = discord.utils.get(db.category.text_channels, name=f"{db.name}-{name}")
         return chan is not None
 
@@ -22,14 +22,14 @@ class Table:
     async def create(cl,db,name):
         if cl.exists(db, name):
             raise TableAlreadyExist(db, name)
-        await create_text_channel(f"{db.name}-{name}", reason="creating table in database")
+        await db.category.create_text_channel(f"{db.name}-{name}", reason="creating table in database")
         db.logger.info("Creating table %s in database %s",name,db.name)
         return cl(db, name)
 
     async def fetch(self):
         data = []
         self.db.logger.info("Fetching table %s from database %s ...",self.name,self.db.name)
-        async for message in channel.history(limit=None):
+        async for message in self.channel.history(limit=None):
             data.append(DataFormat.parse(message.content))
         self.db.logger.info("Fetching table %s from database %s finished",self.name,self.db.name)
         return data
@@ -45,10 +45,10 @@ class Table:
 
     async def delete_row(self,identifier):
         #assume the identifier is always in the first column
-        async for message in channel.history(limit=None):
+        async for message in self.channel.history(limit=None):
             data = DataFormat.parse(message.content)
             if data[0] == identifier:
-                message.delete()
+                await message.delete()
         self.db.logger.info("Removed row from table %s from database %s",self.name,self.db.name)
 
     async def update_row(self,identifier,*data):
