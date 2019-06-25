@@ -34,18 +34,18 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
-      - run:
-          name: write config
-          command: |
-            echo '{' > config.json
-            echo '"token": "'$token'"' >> config.json
-            echo '}' >> config.json
-
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            timeout --preserve-status -s SIGINT --kill-after=30 60 python3 main.py
+      # - run:
+      #     name: write config
+      #     command: |
+      #       echo '{' > config.json
+      #       echo '"token": "'$token'"' >> config.json
+      #       echo '}' >> config.json
+      #
+      # - run:
+      #     name: run tests
+      #     command: |
+      #       . venv/bin/activate
+      #       timeout --preserve-status -s SIGINT --kill-after=30 60 python3 main.py
 
       - store_artifacts:
           path: test-reports

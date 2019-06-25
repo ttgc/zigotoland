@@ -25,10 +25,10 @@ class Database:
 
     @classmethod
     async def create(cl,bot,logger,servid,name):
-        if cl.exists(servid, name):
+        if cl.exists(bot, servid, name):
             raise DatabaseAlreadyExist(name)
         srv = discord.utils.get(bot.guilds, id=servid)
-        if self.srv is None:
+        if srv is None:
             raise ServerNotFoundException(servid)
         botperm = discord.PermissionOverwrite(read_messages=True, send_messages=True,
                     manage_messages=True,
@@ -36,7 +36,7 @@ class Database:
         everyoneperm = discord.PermissionOverwrite(read_messages=False, send_messages=False,
                     manage_messages=False,
                     read_message_history=False)
-        perms = {self.bot.user: botperm, srv.default_role: everyoneperm}
+        perms = {bot.user: botperm, srv.default_role: everyoneperm}
         await srv.create_category_channel(f"python.db={name}", overwrites=perms, reason="database create")
         logger.info("Create database in center %s named %s",str(srv),name)
         return cl(bot,logger,servid,name)

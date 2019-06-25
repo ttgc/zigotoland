@@ -7,6 +7,9 @@ class DataFormat:
     def __init__(self,*data):
         self.data = data
 
+    def __getitem__(self,item):
+        return self.data[item]
+
     def __str__(self):
         return "|@|".join(self.data)
 
