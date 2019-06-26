@@ -62,7 +62,7 @@ class Help(commands.HelpCommand):
         embd.set_footer(text="Made by Zigoto Team")
         embd.set_author(name="Zigoto Bot",icon_url=self.context.bot.user.avatar_url)
         embd.add_field(name="Prototype :",value=self.get_command_signature(command),inline=False)
-        embd.add_field(name=self."Description :",value=command.help,inline=False)
+        embd.add_field(name="Description :",value=command.help,inline=False)
         await self.get_destination().send(embed=embd)
 
     async def send_group_help(self,group):
