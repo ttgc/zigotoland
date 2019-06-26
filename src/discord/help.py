@@ -71,4 +71,4 @@ class Help(commands.HelpCommand):
         embd.set_author(name="Zigoto Bot",icon_url=self.context.bot.user.avatar_url)
         for cmd in group.commands:
             embd.add_field(name=cmd.qualified_name,value=self.get_command_signature(cmd),inline=True)
-await self.get_destination().send(embed=embd)
+        await self.get_destination().send(embed=embd)

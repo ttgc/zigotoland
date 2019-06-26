@@ -4,26 +4,24 @@ import logging
 import asyncio
 import emojis
 from discord.ext import commands
-from src.games.pennyMachine.pennyMachine import *
+from discord.ext import commands
+from src.discord.checks import *
+from src.discord.converters import *
+from src.discord.database.database import *
+from src.discord.database.table import *
+
+
 client = discord.Client()
 
-class PennyMachineCog(commands.Cog):
+class Pennymachine(commands.Cog):
 
     def __init__(self, bot, logger):
         self.bot = bot
         self.logger = logger
 
-    #@commands.check()
+    @commands.check(check_inserv)
     @commands.command()
-    async def pennyMachine(self, ctx, bet):
-        pass
-
-    @client.event
-    async def on_message(message):
-        author = message.author
-
-    @commands.command()
-    async pennymachine(self, ctx, bet: int):
+    async def pennymachine(self, ctx, bet: int ):
         """Make your bet and pray for the win"""
 
         money_up1 = 0.5
@@ -52,13 +50,20 @@ class PennyMachineCog(commands.Cog):
         draw1, draw2, draw3 = 0, 0, 0
         list = [randint(1, 100), randint(1, 100), randint(1, 100)]
         for i in range(3):
-            if i < 3: draw+"i" = 7
-            elif i < 8: draw+"i" = 6
-            elif i < 15: draw+"i" = 5
-            elif i < 25: draw+"i" = 4
-            elif i < 40: draw+"i" = 3
-            elif i < 65: draw+"i" = 2
-            elif i < 20: draw+"i" = 1
+            if i < 3:
+                draw+"i" = 7
+            elif i < 8:
+                draw+"i" = 6
+            elif i < 15:
+                draw+"i" = 5
+            elif i < 25:
+                draw+"i" = 4
+            elif i < 40:
+                draw+"i" = 3
+            elif i < 55:
+                draw+"i" = 2
+            elif i < 75:
+                str(draw)+"i" = 1
 
         for i in range(3):
             await asyncio.sleep(0.2)
@@ -74,7 +79,7 @@ class PennyMachineCog(commands.Cog):
                 await bot.send_message(emojize(":kiwi: :kiwi: :kiwi:", use_aliases = True))
             elif i == 6:
                 await bot.send_message(emojize(":monkey_face: :monkey_face: :monkey_face:", use_aliases = True))
-            else i == 7:
+            else:
                 await bot.send_message(emojize(":moneybag: :moneybag: :moneybag:", use_aliases = True))
 
 
