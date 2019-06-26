@@ -30,7 +30,7 @@ class PokerLobby:
 
     async def join(self,user):
         self.player[user] = self.minimalBet
-        await self.channel.send("{} joined the table".format(str(user)))
+        await self.channel.send("{} joined the table".format(user.mention))
         await self.channel.set_permissions(user, overwrite=self.perms, reason="joining poker lobby")
         self.logger.info("user %d joining poker lobby %s", user.id, str(self.channel))
 
@@ -41,7 +41,7 @@ class PokerLobby:
         moneyEarned = self.player[user] - self.minimalBet
         await self.usertable.update_row(str(user.id), str(int(usr[1]) + moneyEarned))
         if delete: del(self.player[user])
-        await self.channel.send("{} left the table".format(str(user)))
+        await self.channel.send("{} left the table".format(user.mention))
         await self.channel.set_permissions(user, overwrite=None, reason="leaving poker lobby")
         self.logger.info("user %d leaving poker lobby %s", user.id, str(self.channel))
 
