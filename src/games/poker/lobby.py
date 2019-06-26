@@ -5,6 +5,7 @@ import discord
 from src.discord.database.database import *
 from src.discord.database.table import *
 from src.utils.config import *
+from src.games.poker.round import *
 
 class PokerLobby:
     instances = {}
@@ -23,6 +24,8 @@ class PokerLobby:
         self.logger = logger
         self.logger.info("creating lobby for poker : %s", str(self.channel))
         self.owner = owner
+        self.curround = None
+        self.curnbrround = 0
         PokerLobby.instances[self.channel] = self
 
     async def join(self,user):
@@ -49,3 +52,13 @@ class PokerLobby:
         del(PokerLobby.instances[self.channel])
         self.logger.info("disband poker lobby %s", str(self.channel))
         await self.channel.delete(reason="disband poker lobby")
+
+    async def check_auto_disband(self):
+        if self.curnbrround == self.round and self.curround is None:
+            await self.disband()
+
+    def startround(self):
+        if self.curnbrround < self.round:
+            self.curnbrround += 1
+            self.round = PokerRound(self)
+            return self.round
