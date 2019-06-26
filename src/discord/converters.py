@@ -11,3 +11,12 @@ class RouletteConverter(commands.Converter):
         elif arg.startswith("B"):
             return "black", int(arg[1:])
         raise commands.ArgumentParsingError("unexisting area")
+
+class LobbyConverter(commands.Converter):
+    async def convert(self,ctx,arg):
+        cat = discord.utils.get(ctx.guild.categories, name="poker")
+        chan = discord.utils.get(cat.text_channels, name=name)
+        lobby = PokerLobby.instances.get(chan, None)
+        if lobby is None:
+            raise commands.ArgumentParsingError("this poker lobby does not exists")
+        return lobby

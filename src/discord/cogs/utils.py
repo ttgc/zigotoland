@@ -29,7 +29,7 @@ class Utils(commands.Cog):
     @commands.check(check_botowner)
     @commands.command()
     async def shutdown(self,ctx):
-        await ctx.message.channel.send("You are requesting a shutdown, please ensure that you want to performe it by typing `confirm`")
+        await ctx.message.channel.send("You are requesting a shutdown, please ensure that you want to perform it by typing `confirm`")
         chk = lambda m: m.author == ctx.message.author and m.channel == ctx.message.channel and m.content.lower() == 'confirm'
         try: answer = await self.bot.wait_for('message',check=chk,timeout=60)
         except asyncio.TimeoutError: answer = None
@@ -44,7 +44,7 @@ class Utils(commands.Cog):
     @commands.check(check_botowner)
     @commands.command()
     async def destroy(self,ctx):
-        await ctx.message.channel.send("You are requesting to destroy the current financial district server, please ensure that you want to performe it by typing `confirm`")
+        await ctx.message.channel.send("You are requesting to destroy the current financial district server, please ensure that you want to perform it by typing `confirm`")
         chk = lambda m: m.author == ctx.message.author and m.channel == ctx.message.channel and m.content.lower() == 'confirm'
         try: answer = await self.bot.wait_for('message',check=chk,timeout=60)
         except asyncio.TimeoutError: answer = None

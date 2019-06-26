@@ -17,7 +17,7 @@ from src.discord.help import *
 
 # import cogs
 from src.discord.cogs.utils import *
-from src.discord.cogs.roulette import *
+from src.discord.cogs.games import *
 
 # =============== INIT ===============
 
@@ -143,7 +143,7 @@ async def on_ready():
 async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
-    client.add_cog(Roulette(client,logger))
+    client.add_cog(Games(client,logger))
     await client.login(TOKEN)
     await client.connect()
 
