@@ -3,6 +3,7 @@
 
 import discord
 from discord.ext import commands
+from src.games.poker.lobby import *
 
 class RouletteConverter(commands.Converter):
     async def convert(self,ctx,arg):
