@@ -31,20 +31,21 @@ class PokerLobby:
         await self.channel.set_permissions(user, overwrite=self.perms, reason="joining poker lobby")
         self.logger.info("user %d joining poker lobby %s", user.id, str(self.channel))
 
-    async def leave(self,user):
+    async def leave(self,user,delete=True):
         usrlist = await self.usertable.fetch()
         for usr in usrlist:
             if usr[0] == str(user.id): break
         moneyEarned = self.player[user] - self.minimalBet
-        self.usertable.update_row(str(user.id), str(int(usr[1]) + moneyEarned))
-        del(self.player[user])
+        await self.usertable.update_row(str(user.id), str(int(usr[1]) + moneyEarned))
+        if delete: del(self.player[user])
         await self.channel.send("{} left the table".format(str(user)))
         await self.channel.set_permissions(user, overwrite=None, reason="leaving poker lobby")
         self.logger.info("user %d leaving poker lobby %s", user.id, str(self.channel))
 
     async def disband(self):
         for usr in self.player.keys():
-            await self.leave(usr)
+            await self.leave(usr, False)
+        self.player = {}
         del(PokerLobby.instances[self.channel])
         self.logger.info("disband poker lobby %s", str(self.channel))
         await self.channel.delete(reason="disband poker lobby")
