@@ -7,27 +7,34 @@ from src.discord.database.table import *
 from src.utils.config import *
 
 class PokerLobby:
+    instances = {}
+
+    def __new__(cl,channel,minimalBet,bot,logger,round=10):
+        return instances.get(channel, Object.__new__(cl,channel,minimalBet,bot,logger,round))
+
     def __init__(self,channel,minimalBet,bot,logger,round=10):
-        self.minimalBet = minimalBe
+        self.minimalBet = minimalBet
         self.channel = channel
         config = Config()
         self.db = Database(bot,logger,config.guild.id,"selfguild")
-        if not Table.exists(db,"poker"):
-            Table.create(db,"poker")
-        self.dbtable = Table(db,"poker")
+        self.usertable = Table(db,"user")
         self.round = round
-        self.player = []
+        self.player = {}
 
     async def join(self,user):
-        self.dbtable.add_row(str(self.channel.id),str(user.id),str(self.minimalBet))
-        self.player.append(user)
+        self.player[user] = self.minimalBet
         await self.channel.send("{} joined the table".format(str(user)))
 
     async def leave(self,user):
-        self.dbtable.delete_row(str(self.channel.id),str(user.id))
-        self.player.remove(user)
+        usrlist = await self.usertable.fetch()
+        for usr in usrlist:
+            if usr[0] == str(user.id)
+        moneyEarned = self.player[user] - self.minimalBet
+        self.usertable.update_row(str(user.id), str(int(usr[1]) + moneyEarned))
+        del(self.player[user])
         await self.channel.send("{} left the table".format(str(user)))
 
     async def disband(self):
-        self.dbtable.delete_row(str(self.channel.id))
-        self.player = []
+        for usr in self.player.keys():
+            await self.leave(usr)
+        del(PokerLobby.instances[self.channel])
