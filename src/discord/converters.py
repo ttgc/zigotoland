@@ -1,6 +1,7 @@
 #!usr/bin/env python3.7
 #-*-coding:utf-8-*-
 
+import discord
 from discord.ext import commands
 
 class RouletteConverter(commands.Converter):
