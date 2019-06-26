@@ -80,7 +80,7 @@ class PokerRound:
         for i in self.lobby.player.keys():
             self.lobby.player[i] -= self.curbet[i]
             cards = self.cards[i]+self.flop+self.turn+self.river
-            if winner is None or (CardSet.compare(winnerCard, cards) == 1 and i != winner):
+            if winner is None or (CardSet.compare(winnerCard, cards) > 0 and i != winner):
                 winner = i
                 winnerCard = cards
             self.lobby.channel.send("Player {} has the following cards :", self.cards[i][0], self.cards[i][1])
@@ -90,7 +90,7 @@ class PokerRound:
             if k <= 0:
                 await self.lobby.leave(i,False)
                 clearlist.append(i)
-        await self.lobby.channel.send("End of the round !\nThe winner is {} with {} and earned {} coins".format(winner, CardSet.retrieveCombination(winnerCard), self.totalbet)
+        await self.lobby.channel.send("End of the round !\nThe winner is {} with {} and earned {} coins".format(winner, CardSet.combination[CardSet.retrieveCombination(winnerCard)], self.totalbet)
         await asyncio.sleep(1)
         for i in clearlist: del(self.lobby.player[i])
         self.lobby.curround = None
