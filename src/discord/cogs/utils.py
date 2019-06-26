@@ -64,4 +64,4 @@ class Utils(commands.Cog):
         invite = await config.guild.text_channels[0].create_invite(max_age=3600,reason="Create invite")
         self.logger.info("Created invite to self-guild : %s",invite.url)
         print(invite.url)
-        await ctx.channel.send(f"Welcome to the financial district : \n{invite.url}")
+        await ctx.channel.send("Welcome to the financial district : \n{}".format(invite.url))
