@@ -13,9 +13,11 @@ from src.utils.logs import *
 from src.utils.config import *
 from src.discord.database.database import *
 from src.discord.database.table import *
+from src.discord.help import *
 
 # import cogs
 from src.discord.cogs.utils import *
+from src.discord.cogs.roulette import *
 
 # =============== INIT ===============
 
@@ -33,7 +35,7 @@ TOKEN = config.token
 
 # client init
 global client
-client = discord.ext.commands.Bot('/',case_insensitive=True)
+client = discord.ext.commands.Bot('/',case_insensitive=True,help_command=Help())
 
 # =============== CORE ===============
 
@@ -141,6 +143,7 @@ async def on_ready():
 async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
+    client.add_cog(Roulette(client,logger))
     await client.login(TOKEN)
     await client.connect()
 
