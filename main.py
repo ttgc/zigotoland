@@ -50,7 +50,7 @@ async def check_money(ctx):
         for i in userlist:
             if int(i[0]) == ctx.author.id and int(i[1]) < -10000:
                 await ctx.author.send("You lose ! You are bankrupt !")
-                await ctx.channel.send(f"{str(ctx.author)} is bankrupt and has been exiled from financial district")
+                await ctx.channel.send("{} is bankrupt and has been exiled from financial district".format(str(ctx.author)))
                 await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=1)
 
 # events
