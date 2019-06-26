@@ -23,6 +23,7 @@ class PokerLobby:
         self.logger = logger
         self.logger.info("creating lobby for poker : %s", str(self.channel))
         self.owner = owner
+        PokerLobby.instances[self.channel] = self
 
     async def join(self,user):
         self.player[user] = self.minimalBet
