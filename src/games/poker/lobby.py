@@ -33,7 +33,7 @@ class PokerLobby:
     async def leave(self,user):
         usrlist = await self.usertable.fetch()
         for usr in usrlist:
-            if usr[0] == str(user.id)
+            if usr[0] == str(user.id): break
         moneyEarned = self.player[user] - self.minimalBet
         self.usertable.update_row(str(user.id), str(int(usr[1]) + moneyEarned))
         del(self.player[user])
