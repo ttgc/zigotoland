@@ -60,6 +60,7 @@ class Games(commands.Cog):
 
     @poker_lobby.command(name="create", aliases=["+","new"])
     async def poker_lobby_create(self, ctx, name, initial_bet: int, round: typing.Optional[int] = 10):
+        """Create a lobby for playing poker game. Other players could join with `/poker lobby join`"""
         cat = discord.utils.get(ctx.guild.categories, name="poker")
         chan = None
         if cat is None:
@@ -80,6 +81,7 @@ class Games(commands.Cog):
 
     @poker_lobby.command(name="disband", aliases=["-","delete","remove"])
     async def poker_lobby_disband(self, ctx):
+        """Disband the current lobby, you'll need to be the owner of the lobby"""
         lobby = PokerLobby.instances.get(ctx.channel, None)
         if lobby is None:
             await ctx.channel.send("this channel is not a poker lobby")
@@ -97,12 +99,19 @@ class Games(commands.Cog):
 
     @poker_lobby.command(name="join")
     async def poker_lobby_join(self, ctx, lobby: LobbyConverter):
+        """Join an existing poker lobby"""
         await lobby.join(ctx.author)
 
     @poker_lobby.command(name="leave")
     async def poker_lobby_leave(self, ctx):
+        """Leave the lobby where you are"""
         lobby = PokerLobby.instances.get(ctx.channel, None)
         if lobby is None:
             await ctx.channel.send("this channel is not a poker lobby")
         else:
             await lobby.leave(ctx.author)
+            if lobby.owner == ctx.author:
+                if lobby.player == 0:
+                    await lobby.disband()
+                else:
+                    lobby.owner = list(lobby.player.keys())[0]
