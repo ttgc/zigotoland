@@ -6,6 +6,7 @@ from src.discord.checks import *
 from src.discord.converters import *
 from src.discord.database.database import *
 from src.discord.database.table import *
+from src.games.poker.lobby import *
 from random import randint, choice, shuffle
 import logging
 import asyncio
