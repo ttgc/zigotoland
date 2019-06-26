@@ -43,10 +43,10 @@ class Table:
         await data.send(self.channel)
         self.db.logger.info("Added row to table %s from database %s",self.name,self.db.name)
 
-    async def delete_row(self,identifier):
+    async def delete_row(self,*identifier):
         #assume the identifier is always in the first column
         async for message in self.channel.history(limit=None):
             data = DataFormat.parse(message.content)
-            if data[0] == identifier:
+            if data[:len(identifier)] == identifier:
                 await message.delete()
         self.db.logger.info("Removed row from table %s from database %s",self.name,self.db.name)
