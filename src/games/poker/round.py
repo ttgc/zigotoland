@@ -60,7 +60,14 @@ class PokerRound:
         await self.lobby.channel.send("{} is raising the bet with {} more coins".format(player.mention, amount))
         return self.nextplayer()
 
+    async def inform_player(self):
+        for i,k in self.cards.items():
+            combi = CardSet.combination[CardSet.retrieveCombination(k)])
+            await i.send("Your current hand combination is : {}".format(combi)
+            await asyncio.sleep(0.2)
+
     async def endturn(self):
+        await inform_player()
         if self.tour == 2:
             await self.lobby.channel.send("End of turn 1 : The flop is :\n```\n{}\n{}\n{}\n```".format(self.flop[0],self.flop[1],self.flop[2]))
             return self.flop
