@@ -16,14 +16,18 @@ class PokerLobby:
             Table.create(db,"poker")
         self.dbtable = Table(db,"poker")
         self.round = round
+        self.player = []
 
     async def join(self,user):
         self.dbtable.add_row(str(self.channel.id),str(user.id),str(self.minimalBet))
+        self.player.append(user)
         await self.channel.send("{} joined the table".format(str(user)))
 
     async def leave(self,user):
         self.dbtable.delete_row(str(self.channel.id),str(user.id))
+        self.player.remove(user)
         await self.channel.send("{} left the table".format(str(user)))
 
     async def disband(self):
         self.dbtable.delete_row(str(self.channel.id))
+        self.player = []
