@@ -57,7 +57,7 @@ class Help(commands.HelpCommand):
             embd.add_field(name=i.qualified_name,value=self.get_command_signature(i),inline=True)
         await self.get_destination().send(embed=embd)
 
-     async def send_command_help(self,command):
+    async def send_command_help(self,command):
         embd = discord.Embed(title="Zigoto Bot",description="Help on command {}".format(command.qualified_name),colour=discord.Color(int('3CD070',16)),url="https://github.com/ttgc/zigotoland")
         embd.set_footer(text="Made by Zigoto Team")
         embd.set_author(name="Zigoto Bot",icon_url=self.context.bot.user.avatar_url)
