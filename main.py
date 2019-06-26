@@ -13,6 +13,7 @@ from src.utils.logs import *
 from src.utils.config import *
 from src.discord.database.database import *
 from src.discord.database.table import *
+from src.discord.help import *
 
 # import cogs
 from src.discord.cogs.utils import *
@@ -34,7 +35,7 @@ TOKEN = config.token
 
 # client init
 global client
-client = discord.ext.commands.Bot('/',case_insensitive=True)
+client = discord.ext.commands.Bot('/',case_insensitive=True,help_command=Help())
 
 # =============== CORE ===============
 
