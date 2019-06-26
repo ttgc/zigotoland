@@ -11,18 +11,18 @@ class Table:
         self.name = name
         if not Table.exists(db, name):
             raise TableDoesNotExist(db, name)
-        self.channel = discord.utils.get(db.category.text_channels, name=f"{db.name}-{name}")
+        self.channel = discord.utils.get(db.category.text_channels, name="{}-{}".format(db.name,name))
 
     @staticmethod
     def exists(db,name):
-        chan = discord.utils.get(db.category.text_channels, name=f"{db.name}-{name}")
+        chan = discord.utils.get(db.category.text_channels, name="{}-{}".format(db.name,name))
         return chan is not None
 
     @classmethod
     async def create(cl,db,name):
         if cl.exists(db, name):
             raise TableAlreadyExist(db, name)
-        await db.category.create_text_channel(f"{db.name}-{name}", reason="creating table in database")
+        await db.category.create_text_channel("{}-{}".format(db.name,name), reason="creating table in database")
         db.logger.info("Creating table %s in database %s",name,db.name)
         return cl(db, name)
 
