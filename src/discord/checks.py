@@ -6,3 +6,7 @@ from src.utils.config import *
 def check_botowner(ctx):
     config = Config()
     return ctx.author.id in config.owners
+
+def check_inserv(ctx):
+    config = Config()
+    return (ctx.guild == config.guild)

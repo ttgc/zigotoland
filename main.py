@@ -16,6 +16,7 @@ from src.discord.database.table import *
 
 # import cogs
 from src.discord.cogs.utils import *
+from src.discord.cogs.roulette import *
 
 # =============== INIT ===============
 
@@ -141,6 +142,7 @@ async def on_ready():
 async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
+    client.add_cog(Roulette(client,logger))
     await client.login(TOKEN)
     await client.connect()
 
