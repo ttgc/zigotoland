@@ -14,7 +14,7 @@ class PokerLobby:
         self.minimalBet = minimalBet
         self.channel = channel
         self.db = Database(bot,logger,PokerLobby.config.guild.id,"selfguild")
-        self.usertable = Table(db,"user")
+        self.usertable = Table(self.db,"user")
         self.round = round
         self.player = {}
         self.perms = discord.PermissionOverwrite()
