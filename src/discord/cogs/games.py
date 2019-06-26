@@ -65,7 +65,7 @@ class Games(commands.Cog):
             everyoneperm = discord.PermissionOverwrite(read_messages=False, send_messages=False,
                         manage_messages=False,
                         read_message_history=False)
-            perms = {srv.default_role: everyoneperm}
+            perms = {ctx.guild.default_role: everyoneperm}
             cat = await ctx.guild.create_category_channel("poker",overwrites=perms,reason="creating poker category")
             self.logger.info("creating poker category")
         else:
