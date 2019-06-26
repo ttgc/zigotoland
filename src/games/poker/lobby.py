@@ -13,7 +13,7 @@ class PokerLobby:
     def __init__(self,owner,channel,minimalBet,bot,logger,round=10):
         self.minimalBet = minimalBet
         self.channel = channel
-        self.db = Database(bot,logger,config.guild.id,"selfguild")
+        self.db = Database(bot,logger,PokerLobby.config.guild.id,"selfguild")
         self.usertable = Table(db,"user")
         self.round = round
         self.player = {}
