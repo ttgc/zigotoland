@@ -19,6 +19,7 @@ from src.discord.help import *
 # import cogs
 from src.discord.cogs.utils import *
 from src.discord.cogs.roulette import *
+from src.discord.cogs.pennymachine import *
 
 # =============== INIT ===============
 
@@ -167,6 +168,7 @@ async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
     client.add_cog(Roulette(client,logger))
+    client.add_cog(Pennymachine(client, logger))
     await client.login(TOKEN)
     await client.connect()
 
