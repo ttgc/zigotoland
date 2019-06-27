@@ -87,20 +87,21 @@ class Utils(commands.Cog):
         money = int(user[1])
         if money <= 1000:
             color = int("FF0000",16)
-            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/7/76/Normal-midas.jpg/revision/latest?cb=20110612201523"
-        elif money <= 10000:
+            card = "https://vignette.wikia.nocookie.net/soulcontrol/images/f/f9/Kimi_card.jpg/revision/latest?cb=20110508191032"
+        elif money <= 100000:
             color = int("FFFF00",16)
-            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/9/9a/Gold-midas.jpg/revision/latest?cb=20110612201743"
-        elif money <= 1000000:
+            card = "https://vignette.wikia.nocookie.net/soulcontrol/images/e/ee/Jenny_card.jpg/revision/latest?cb=20110508191130"
+        elif money <= 10000000:
             color = int('3CD070',16)
-            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/d/db/Platinum-midas.jpg/revision/latest?cb=20110612202020"
+            card = "https://vignette.wikia.nocookie.net/soulcontrol/images/d/d5/Kou_card.jpg/revision/latest?cb=20110508191202"
         else:
             color = int('010101',16)
-            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/9/96/Dark-midas.jpg/revision/latest?cb=20110612202144"
+            card = "https://vignette.wikia.nocookie.net/soulcontrol/images/5/50/Mikuni_card.jpg/revision/latest?cb=20110508191230"
 
         embd = discord.Embed(title="Current wallet",description="Financial district bank account information",colour=discord.Color(color))
         embd.set_footer(text="Bot created by Ttgc and Trakozz",icon_url=self.bot.user.avatar_url)
-        embd.set_thumbnail(url="card")
-        embd.set_author(name=str(ctx.author),icon_url=ctx.author.avatar.avatar_url)
+        embd.set_thumbnail(url=card)
+        embd.set_author(name=str(ctx.author),icon_url=ctx.author.avatar_url)
+        embd.add_field(name="Currently on your account :", value="{} dollars".format(money), inline=True)
 
         await ctx.channel.send(embed=embd)
