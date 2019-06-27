@@ -117,6 +117,7 @@ class Games(commands.Cog):
     @commands.check(check_inpokerlobby)
     @poker.command(name="start")
     async def poker_start(self, ctx, kickifnotready: typing.Optional[bool] = False):
+        """Start a poker game in the current lobby"""
         lobby = PokerLobby.instances[ctx.channel]
         await game(ctx, self.bot, self.logger, lobby, kickifnotready)
         await asyncio.sleep(5)
