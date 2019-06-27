@@ -84,4 +84,4 @@ async def game(ctx, bot, logger, lobby, kickifnotready=True):
             else:
                 newtour = await newgame.follow(newgame.playing)
         await newgame.endturn()
-        logger.log(logging.DEBUG+1, "poker game end in lobby %s",str(lobby.channel))
+    logger.log(logging.DEBUG+1, "poker game end in lobby %s",str(lobby.channel))
