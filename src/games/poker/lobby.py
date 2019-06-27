@@ -11,7 +11,7 @@ class PokerLobby:
     instances = {}
     config = Config()
 
-    def __init__(self,owner,channel,minimalBet,bot,logger,round=10):
+    def __init__(self,owner,channel,minimalBet,bot,logger,round_=10):
         self.minimalBet = minimalBet
         self.channel = channel
         self.db = Database(bot,logger,PokerLobby.config.guild.id,"selfguild")
