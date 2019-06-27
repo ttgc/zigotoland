@@ -118,6 +118,6 @@ class Games(commands.Cog):
     @poker.command(name="start")
     async def poker_start(self, ctx, kickifnotready: typing.Optional[bool] = False):
         lobby = PokerLobby.instances[ctx.channel]
-        asyncio.run_coroutine_threadsafe(
-                game(ctx, self.bot, self.logger, lobby, kickifnotready),
-                self.bot.loop)
+        await game(ctx, self.bot, self.logger, lobby, kickifnotready)
+        await asyncio.sleep(5)
+        await lobby.check_auto_disband()
