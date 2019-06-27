@@ -85,7 +85,7 @@ class CardSet:
         if color: return 5
         if quinte: return 4
         if 3 in samenumber: return 3
-        if numberoccur[2] == 2: return 2
+        if numberoccur[2] >= 2: return 2
         if 2 in samenumber: return 1
         return 0
 
