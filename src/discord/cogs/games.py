@@ -76,7 +76,7 @@ class Games(commands.Cog):
             if chan is not None:
                 await ctx.channel.send("This lobby already exists, join it or create another lobby")
                 return
-        chan = await ctx.guild.create_text_channel(name, category=cat, reason="creating poker lobby", slowmode_delay=10)
+        chan = await ctx.guild.create_text_channel(name, category=cat, reason="creating poker lobby", slowmode_delay=5)
         lobby = PokerLobby(ctx.author, chan, buy_in, self.bot, self.logger, round)
         await lobby.join(ctx.author)
 
