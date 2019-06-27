@@ -81,21 +81,19 @@ class Games(commands.Cog):
         await lobby.join(ctx.author)
 
     @commands.check(check_inpokerlobby)
+    @commands.check(check_pokerlobbyowner)
     @poker_lobby.command(name="disband", aliases=["-","delete","remove"])
     async def poker_lobby_disband(self, ctx):
         """Disband the current lobby, you'll need to be the owner of the lobby"""
         lobby = PokerLobby.instances[ctx.channel]
-        if lobby.owner != ctx.author:
-            await ctx.channel.send("you are not the owner of this lobby")
+        await ctx.message.channel.send("Do you really to disband the lobby ? This cannot be undone ! Type `confirm` to disband it")
+        chk = lambda m: m.author == ctx.message.author and m.channel == ctx.message.channel and m.content.lower() == 'confirm'
+        try: answer = await self.bot.wait_for('message',check=chk,timeout=60)
+        except asyncio.TimeoutError: answer = None
+        if answer is None:
+            await ctx.message.channel.send("your request has timeout")
         else:
-            await ctx.message.channel.send("Do you really to disband the lobby ? This cannot be undone ! Type `confirm` to disband it")
-            chk = lambda m: m.author == ctx.message.author and m.channel == ctx.message.channel and m.content.lower() == 'confirm'
-            try: answer = await self.bot.wait_for('message',check=chk,timeout=60)
-            except asyncio.TimeoutError: answer = None
-            if answer is None:
-                await ctx.message.channel.send("your request has timeout")
-            else:
-                await lobby.disband()
+            await lobby.disband()
 
     @poker_lobby.command(name="join")
     async def poker_lobby_join(self, ctx, lobby: LobbyConverter):
@@ -115,6 +113,7 @@ class Games(commands.Cog):
                 lobby.owner = list(lobby.player.keys())[0]
 
     @commands.check(check_inpokerlobby)
+    @commands.check(check_pokerlobbyowner)
     @poker.command(name="start")
     async def poker_start(self, ctx, kickifnotready: typing.Optional[bool] = False):
         """Start a poker game in the current lobby"""

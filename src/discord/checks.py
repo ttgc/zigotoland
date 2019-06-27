@@ -14,3 +14,7 @@ def check_inserv(ctx):
 
 def check_inpokerlobby(ctx):
     return ctx.channel in PokerLobby.instances
+
+def check_pokerlobbyowner(ctx):
+    if not check_inpokerlobby(ctx): return False
+    return PokerLobby.instances[ctx.channel].owner == ctx.author
