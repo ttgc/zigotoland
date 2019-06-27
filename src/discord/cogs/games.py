@@ -7,6 +7,7 @@ from src.discord.converters import *
 from src.discord.database.database import *
 from src.discord.database.table import *
 from src.games.poker.lobby import *
+from src.games.poker.poker import *
 from random import randint, choice, shuffle
 import logging
 import asyncio
@@ -79,13 +80,12 @@ class Games(commands.Cog):
         lobby = PokerLobby(ctx.author, chan, initial_bet, self.bot, self.logger, round)
         await lobby.join(ctx.author)
 
+    @commands.check(check_inpokerlobby)
     @poker_lobby.command(name="disband", aliases=["-","delete","remove"])
     async def poker_lobby_disband(self, ctx):
         """Disband the current lobby, you'll need to be the owner of the lobby"""
-        lobby = PokerLobby.instances.get(ctx.channel, None)
-        if lobby is None:
-            await ctx.channel.send("this channel is not a poker lobby")
-        elif lobby.owner != ctx.author:
+        lobby = PokerLobby.instances[ctx.channel]
+        if lobby.owner != ctx.author:
             await ctx.channel.send("you are not the owner of this lobby")
         else:
             await ctx.message.channel.send("Do you really to disband the lobby ? This cannot be undone ! Type `confirm` to disband it")
@@ -102,16 +102,22 @@ class Games(commands.Cog):
         """Join an existing poker lobby"""
         await lobby.join(ctx.author)
 
+    @commands.check(check_inpokerlobby)
     @poker_lobby.command(name="leave")
     async def poker_lobby_leave(self, ctx):
         """Leave the lobby where you are"""
-        lobby = PokerLobby.instances.get(ctx.channel, None)
-        if lobby is None:
-            await ctx.channel.send("this channel is not a poker lobby")
-        else:
-            await lobby.leave(ctx.author)
-            if lobby.owner == ctx.author:
-                if lobby.player == 0:
-                    await lobby.disband()
-                else:
-                    lobby.owner = list(lobby.player.keys())[0]
+        lobby = PokerLobby.instances[ctx.channel]
+        await lobby.leave(ctx.author)
+        if lobby.owner == ctx.author:
+            if lobby.player == 0:
+                await lobby.disband()
+            else:
+                lobby.owner = list(lobby.player.keys())[0]
+
+    @commands.check(check_inpokerlobby)
+    @poker.command(name="start")
+    async def poker_start(self, ctx, kickifnotready: typing.Optional[bool] = False):
+        lobby = PokerLobby.instances[ctx.channel]
+        asyncio.run_coroutine_threadsafe(
+                game(ctx, self.bot, self.logger, lobby, kickifnotready),
+                self.bot.loop)
