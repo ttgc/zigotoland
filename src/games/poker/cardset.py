@@ -6,7 +6,7 @@ from random import shuffle
 class CardSet:
     color = ["Spade", "Club", "Diamond", "Heart"]
     value = ["7","8","9","10","Jack","Queen","King","As"]
-    combination = ["none","pair","double pair","brelan","quinte","color","full","square","quinte flush","royal quinte flush"]
+    combination = ["none","pair","double pair","set (3 of a kind)","straight","flush","full","quads (4 of a kind)","straight flush","royal straight flush"]
 
     def __init__(self):
         self.cards = []
