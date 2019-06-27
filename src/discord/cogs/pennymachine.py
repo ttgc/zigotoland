@@ -95,9 +95,6 @@ class Pennymachine(commands.Cog):
             draw3 = 2
         else:
             draw3 = 1
-        await ctx.channel.send(draw1)
-        await ctx.channel.send(draw2)
-        await ctx.channel.send(draw3)
 
         await asyncio.sleep(0.2)
         if draw1 == 1:
