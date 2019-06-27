@@ -49,7 +49,6 @@ class CardSet:
 
     @classmethod
     def retrieveCombination(cl, set):
-        combi = 0
         samenumber = [0 for i in range(len(cl.value))]
         samecolor = [0 for i in range(len(cl.color))]
         numberoccur = [0 for i in range(8)]
