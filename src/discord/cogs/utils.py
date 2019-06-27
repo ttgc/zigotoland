@@ -40,11 +40,7 @@ class Utils(commands.Cog):
             pokerlobbyls = []
             for k in PokerLobby.instances.values(): pokerlobbyls.append(k)
             for i in pokerlobbyls:
-<<<<<<< HEAD
                 await i.disband()
-=======
-                await k.disband()
->>>>>>> 31181e24ba636062704f717b8989120907bf5cc0
             self.logger.warning("Shutdown requested by %s",str(ctx.message.author))
             await self.bot.logout()
             await client.close()
