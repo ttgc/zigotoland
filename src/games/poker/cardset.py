@@ -26,6 +26,16 @@ class CardSet:
         return cl.retrieveCombination(set2) - cl.retrieveCombination(set1)
 
     @classmethod
+    def deepcompare(cl, set1, set2):
+        if cl.compare(set1, set2) != 0: return cl.compare(set1, set2)
+        sumset1, sumset2 = 0, 0
+        for card in set1:
+            sumset1 += card.value
+        for card in set2:
+            sumset2 += card.value
+        return sumset2 - sumset1
+
+    @classmethod
     def sortFlush(cl, set):
         cpy = set[:]
         cpy.sort(key=Card.truevalue)

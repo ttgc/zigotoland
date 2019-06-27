@@ -97,7 +97,7 @@ class PokerRound:
         for i in self.playerlist:
             self.lobby.player[i] -= self.curbet[i]
             cards = self.cards[i]+self.flop+self.turn+self.river
-            if winner is None or (CardSet.compare(winnerCard, cards) > 0 and i != winner):
+            if winner is None or (CardSet.deepcompare(winnerCard, cards) > 0 and i != winner):
                 winner = i
                 winnerCard = cards
             await self.lobby.channel.send("Player {} has the following cards : `{}` and `{}`".format(i.mention, self.cards[i][0], self.cards[i][1]))
