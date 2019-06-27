@@ -7,7 +7,7 @@ from src.utils.config import *
 from src.games.poker.lobby import *
 import logging, sys
 
-class Utils(commands.Cog):
+class Economy(commands.Cog):
     def __init__(self,bot,logger):
         self.bot = bot
         self.logger = logger
