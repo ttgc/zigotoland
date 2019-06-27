@@ -96,52 +96,65 @@ class Pennymachine(commands.Cog):
         else:
             draw3 = 1
 
-        await asyncio.sleep(0.2)
+
         if draw1 == 1:
-            await ctx.channel.send(":poop:")
+            res1 = ":poop:"
         elif draw1 == 2:
-            await ctx.channel.send(":monkey_face:")
+            res1 = ":monkey_face:"
         elif draw1 == 3:
-            await ctx.channel.send(":banana:")
+            res1 = ":banana:"
         elif draw1 == 4:
-            await ctx.channel.send(":watermelon:")
+            res1 = ":watermelon:"
         elif draw1 == 5:
-            await ctx.channel.send(":cherries:")
+            res1 = ":cherries:"
         elif draw1 == 6:
-            await ctx.channel.send(":kiwi:")
+            res1 = ":kiwi:"
         else:
-            await ctx.channel.send(":moneybag:")
+            res1 = ":moneybag:"
 
         if draw2 == 1:
-            await ctx.channel.send(":poop:")
+            res2 = ":poop:"
         elif draw2 == 2:
-            await ctx.channel.send(":monkey_face:")
+            res2 = ":monkey_face:"
         elif draw2 == 3:
-            await ctx.channel.send(":banana:")
+            res2 = ":banana:"
         elif draw2 == 4:
-            await ctx.channel.send(":watermelon:")
+            res2 = ":watermelon:"
         elif draw2 == 5:
-            await ctx.channel.send(":cherries:")
+            res2 = ":cherries:"
         elif draw2 == 6:
-            await ctx.channel.send(":kiwi:")
+            res2 = ":kiwi:"
         else:
-            await ctx.channel.send(":moneybag:")
+            res2 = ":moneybag:"
 
         if draw3 == 1:
-            await ctx.channel.send(":poop:")
+            res3 = ":poop:"
         elif draw3 == 2:
-            await ctx.channel.send(":monkey_face:")
+            res3 = ":monkey_face:"
         elif draw3 == 3:
-            await ctx.channel.send(":banana:")
+            res3 = ":banana:"
         elif draw3 == 4:
-            await ctx.channel.send(":watermelon:")
+            res3 = ":watermelon:"
         elif draw3 == 5:
-            await ctx.channel.send(":cherries:")
+            res3 = ":cherries:"
         elif draw3 == 6:
-            await ctx.channel.send(":kiwi:")
+            res3 = ":kiwi:"
         else:
-            await ctx.channel.send(":moneybag:")
+            res3 = ":moneybag:"
 
+        available = [":poop:",":monkey_face:",":banana:",":watermelon:",":cherries:",":kiwi:",":moneybag:"]
+        iteration = random.randint(5,15)
+        init = "{}{}{}".format(random.choice(available), random.choice(available), random.choice(available))
+        msg = await ctx.channel.send(content = init)
+        while (iteration > 0):
+            rolling = "{}{}{}".format(random.choice(available), random.choice(available), random.choice(available))
+            await msg.edit(content = rolling)
+            await asyncio.sleep(0.2)
+            iteration -= 1
+
+        await asyncio.sleep(0.5)
+        final_res = "{}{}{}".format(res1, res2, res3)
+        await ctx.channel.edit(content=final_res)
 
         if draw1 == draw2 and draw2 == draw3:
             if draw1 == 7:
