@@ -70,7 +70,10 @@ class PokerRound:
     async def inform_player(self, supset=[]):
         for i,k in self.cards.items():
             combi = CardSet.combination[CardSet.retrieveCombination(k+supset)]
-            await i.send("Your current hand combination is : {}".format(combi))
+            cardlist = ""
+            for card in k+supset:
+                cardlist += "{}\n".format(card)
+            await i.send("Your current hand combination is : {}\n```\n{}\n```".format(combi, cardlist))
             await asyncio.sleep(0.2)
 
     async def endturn(self):
