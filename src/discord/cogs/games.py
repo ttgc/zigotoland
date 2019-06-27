@@ -109,7 +109,7 @@ class Games(commands.Cog):
         lobby = PokerLobby.instances[ctx.channel]
         await lobby.leave(ctx.author)
         if lobby.owner == ctx.author:
-            if lobby.player == 0:
+            if len(lobby.player) == 0:
                 await lobby.disband()
             else:
                 lobby.owner = list(lobby.player.keys())[0]
