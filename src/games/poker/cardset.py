@@ -4,7 +4,7 @@
 from random import shuffle
 
 class CardSet:
-    color = ["Spade", "Club", "Diamond", "Spades"]
+    color = ["Spade", "Club", "Diamond", "Heart"]
     value = ["7","8","9","10","Jack","Queen","King","As"]
     combination = ["none","pair","double pair","brelan","quinte","color","full","square","quinte flush","royal quinte flush"]
 
@@ -12,7 +12,7 @@ class CardSet:
         self.cards = []
         for i in range(len(CardSet.color)):
             for k in range(len(CardSet.value)):
-                self.cards.append(CardSet.formatCard(k, i))
+                self.cards.append(Card(i, k))
         shuffle(self.cards)
 
     def give(self,number):
@@ -23,7 +23,7 @@ class CardSet:
 
     @classmethod
     def compare(cl, set1, set2):
-        return retrieveCombination(set2) - retrieveCombination(set1)
+        return cl.retrieveCombination(set2) - cl.retrieveCombination(set1)
 
     @classmethod
     def sortFlush(cl, set):
