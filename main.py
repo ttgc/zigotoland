@@ -18,7 +18,7 @@ from src.discord.help import *
 
 # import cogs
 from src.discord.cogs.utils import *
-from src.discord.cogs.roulette import *
+from src.discord.cogs.games import *
 
 # =============== INIT ===============
 
@@ -49,7 +49,7 @@ async def check_money(ctx):
         userdb = Table(db,"user")
         userlist = await userdb.fetch()
         for i in userlist:
-            if int(i[0]) == ctx.author.id and int(i[1]) < -10000:
+            if int(i[0]) == ctx.author.id and int(i[1]) < 0:
                 await ctx.author.send("You lose ! You are bankrupt !")
                 await ctx.channel.send("{} is bankrupt and has been exiled from financial district".format(str(ctx.author)))
                 await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=1)
@@ -166,7 +166,7 @@ async def on_ready():
 async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
-    client.add_cog(Roulette(client,logger))
+    client.add_cog(Games(client,logger))
     await client.login(TOKEN)
     await client.connect()
 

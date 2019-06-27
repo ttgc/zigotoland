@@ -1,8 +1,8 @@
 # ZigotoBot (aka. Financial district manager)
 ZigotoBot is an entertainement bot created for the discord hack week. This bot is able to create its own guild, to share it, to manage it and to allow you playing some financial games inside of it.
-Once you've entered the financial district, you can play some casino games, maybe win, or maybe lose. The bank will generously give you money when you'll enter the guild. 
+Once you've entered the financial district, you can play some casino games, maybe win, or maybe lose. The bank will generously give you money when you'll enter the guild.
 
-Unfortunately, if you are in bankerupt, the bank will exclude you forever from the financial district (i.e. ban). Don't hope to be allowed again, the bot won't let you enter again.
+Unfortunately, if you are bankrupt, the bank will exclude you forever from the financial district (i.e. ban). Don't hope to be allowed again, the bot won't let you enter again.
 
 There is no real money, all of features using "money", use virtual money with no conversion from real money to virtual money or from virtual money to real money. This is just a game !
 
@@ -41,3 +41,8 @@ The bot use the prefix : `/` to execute commands
 
 ## Games commands (only in self managed guild)
 - `/roulette <bet> <area>` : Play roulette game, set up your bet and pray for the ball stops on your selected area. There are 18 areas (from 1 to 18) for each colors, and there are only two colors : R(ed) and B(lack)
+- `/poker lobby create <name>` : Create a lobby for playing poker, other players can join it with the `poker lobby join` command (see below)
+- `/poker lobby join <name>` : Join an existing poker lobby
+- `/poker lobby leave` : Leave the current lobby where you are. Only works when executed in a poker lobby
+- `/poker lobby disband` : Disband the current lobby where you are. Only works when executed in a poker lobby by the owner of the lobby
+- `/poker start [kick_if_not_ready]` : Start a poker round in the current lobby where you are. Only works when executed by lobby owner.
