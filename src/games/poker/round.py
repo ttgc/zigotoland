@@ -34,7 +34,7 @@ class PokerRound:
             self.tour += 1
             changeTour = True
         self.playing = self.playerlist[self.indexplaying]
-        return self.playing, changeTour
+        return changeTour
 
     async def fold(self,player):
         self.lobby.player[player] -= self.curbet[player]
@@ -53,6 +53,7 @@ class PokerRound:
         return self.nextplayer()
 
     async def raise_(self,player,amount):
+        self.curbet[player] = self.curbet[self.playerlist[self.indexplaying-1]]
         self.curbet[player] += amount
         self.totalbet = 0
         for i in self.curbet.values():
