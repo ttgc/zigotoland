@@ -45,4 +45,4 @@ The bot use the prefix : `/` to execute commands
 - `/poker lobby join <name>` : Join an existing poker lobby
 - `/poker lobby leave` : Leave the current lobby where you are. Only works when executed in a poker lobby
 - `/poker lobby disband` : Disband the current lobby where you are. Only works when executed in a poker lobby by the owner of the lobby
-- `/poker start` : Start a poker round in the current lobby where you are. Only works when executed by lobby owner.
+- `/poker start [kick_if_not_ready]` : Start a poker round in the current lobby where you are. Only works when executed by lobby owner.
