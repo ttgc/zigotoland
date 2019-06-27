@@ -45,9 +45,7 @@ async def game(ctx, bot, logger, lobby, kickifnotready=True):
 
     # launch game - 1st turn
     newgame = lobby.startround()
-    chk = lambda m: m.author == lobby.playing and
-                m.channel == ctx.message.channel and
-                (m.content.lower() == 'fold' or m.content.lower() == 'follow' or m.content.lower().startswith('raise '))
+    chk = lambda m: m.author == lobby.playing and m.channel == ctx.message.channel and (m.content.lower() == 'fold' or m.content.lower() == 'follow' or m.content.lower().startswith('raise '))
     await ctx.channel.send("Start of the game !")
     await asyncio.sleep(0.5)
     newtour = False
@@ -66,9 +64,7 @@ async def game(ctx, bot, logger, lobby, kickifnotready=True):
     await newgame.endturn()
 
     # 2nd / 3rd / 4th turn
-    chk = lambda m: m.author == lobby.playing and
-                m.channel == ctx.message.channel and
-                (m.content.lower() == 'fold' or m.content.lower() == 'follow' or m.content.lower().startswith('raise ') or m.content.lower() == 'check')
+    chk = lambda m: m.author == lobby.playing and m.channel == ctx.message.channel and (m.content.lower() == 'fold' or m.content.lower() == 'follow' or m.content.lower().startswith('raise ') or m.content.lower() == 'check')
     for i in range(3):
         await asyncio.sleep(0.5)
         newtour = False
