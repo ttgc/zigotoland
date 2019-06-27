@@ -107,12 +107,15 @@ async def on_member_join(member):
     if member.guild == config.guild:
         db = Database(client,logger,config.guild.id,"selfguild")
         userdb = Table(db,"user")
+        userlist = await userdb.fetch()
+        for i in userlist:
+            if i[0] == str(member.id): return
         await userdb.add_row(str(member.id),"100000")
 
 @client.event
-async def on_member_remove(member):
+async def on_member_ban(guild, user):
     global logger, client, config
-    if member.guild == config.guild:
+    if guild == config.guild:
         db = Database(client,logger,config.guild.id,"selfguild")
         userdb = Table(db,"user")
         await userdb.delete_row(str(member.id))
