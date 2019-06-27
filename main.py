@@ -7,6 +7,7 @@ from discord.ext import commands
 import asyncio
 import logging
 import os, sys
+import traceback
 
 # import personal libraries
 from src.utils.logs import *
@@ -18,7 +19,6 @@ from src.discord.help import *
 # import cogs
 from src.discord.cogs.utils import *
 from src.discord.cogs.roulette import *
-from src.discord.cogs.pennymachine import *
 
 # =============== INIT ===============
 
@@ -55,6 +55,28 @@ async def check_money(ctx):
                 await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=1)
 
 # events
+@client.event
+async def on_command_error(ctx, error):
+    global logger
+    msg = "The following error has occured during the execution of your command :\n```\n{}\n```".format(error)
+
+    if isinstance(error, commands.UserInputError) or isinstance(error, commands.ConversionError):
+        msg = "Your command contains some errors, some arguments are mispelled, missing or of an incorrect type. Please check your syntax"
+    elif isinstance(error, commands.CommandNotFound) or isinstance(error, commands.CheckFailure): return
+    elif isinstance(error, commands.DisabledCommand):
+        msg = "This command is currently disabled and cannot be called"
+    elif isinstance(error, commands.CommandOnCooldown):
+        msg = "This command is still in cooldown for {0:.2f} sec".format(error.retry_after)
+    else: logger.warning(error)
+
+    logger.log(logging.DEBUG+1, error)
+    await ctx.channel.send(msg)
+
+@client.event
+async def on_error(event,*args,**kwargs):
+    global logger
+    logger.error(traceback.format_exc())
+
 @client.event
 async def on_guild_available(guild):
     global logger, client, config
@@ -145,7 +167,6 @@ async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
     client.add_cog(Roulette(client,logger))
-    client.add_cog(Pennymachine(client, logger))
     await client.login(TOKEN)
     await client.connect()
 
