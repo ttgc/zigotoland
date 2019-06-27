@@ -1,11 +1,12 @@
 #!usr/bin/env python3.7
 #-*-coding:utf-8-*-
 
+import discord
 from discord.ext import commands
 from src.discord.checks import *
-from src.utils.config import *
-from src.games.poker.lobby import *
-import logging, sys
+from src.discord.database.database import *
+from src.discord.database.table import *
+import logging
 
 class Economy(commands.Cog):
     def __init__(self,bot,logger):
@@ -42,3 +43,18 @@ class Economy(commands.Cog):
         embd.add_field(name="Currently on your account :", value="{} dollars".format(money), inline=True)
 
         await ctx.channel.send(embed=embd)
+
+    @commands.check(check_inserv)
+    @commands.command(aliases=["give"])
+    async def transfer(self,ctx,amount: int,target: discord.Member):
+        amount = abs(amount)
+        db = Database(self.bot,self.logger,ctx.guild.id,"selfguild")
+        usertable = Table(db,"user")
+        userlist = await usertable.fetch()
+        for usersrc in userlist:
+            if str(ctx.author.id) == usersrc[0]: break
+        for usertarget in userlist:
+            if str(target.id) == usertarget[0]: break
+        await usertable.update_row(usersrc[0], str(int(usersrc[1]) - amount))
+        await usertable.update_row(usertarget[0], str(int(usertarget[1]) + amount))
+        await ctx.channel.send("{} have transfered {} dollars to {} account".format(ctx.author.mention, amount, target.mention))
