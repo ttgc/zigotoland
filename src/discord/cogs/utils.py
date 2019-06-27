@@ -38,7 +38,7 @@ class Utils(commands.Cog):
             await ctx.message.channel.send("your request has timeout")
         else:
             for k in PokerLobby.instances.values():
-                k.disband()
+                await k.disband()
             self.logger.warning("Shutdown requested by %s",str(ctx.message.author))
             await self.bot.logout()
             await client.close()
