@@ -4,6 +4,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+import logging
 
 from src.games.poker.cardset import CardSet, Card
 from src.games.poker.lobby import PokerLobby
@@ -42,6 +43,7 @@ async def game(ctx, bot, logger, lobby, kickifnotready=True):
                 await ctx.channel.send("Some players are not ready, the game won't start")
                 return
     for i in kicklist: del(lobby.player[i])
+    logger.log(logging.DEBUG+1, "poker game starts in lobby %s",str(lobby.channel))
 
     # launch game - 1st turn
     newgame = lobby.startround()
@@ -81,3 +83,4 @@ async def game(ctx, bot, logger, lobby, kickifnotready=True):
             else:
                 newtour = await newgame.follow(lobby.playing)
         await newgame.endturn()
+        logger.log(logging.DEBUG+1, "poker game end in lobby %s",str(lobby.channel))
