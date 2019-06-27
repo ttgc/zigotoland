@@ -59,6 +59,7 @@ class CardSet:
             samecolor[card.color] += 1
         for i in samenumber:
             numberoccur[i] += 1
+        for i in samecolor:
             coloroccur[i] += 1
         quinte = False
         if (numberoccur[1] >= 5):
