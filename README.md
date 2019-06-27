@@ -2,7 +2,7 @@
 ZigotoBot is an entertainement bot created for the discord hack week. This bot is able to create its own guild, to share it, to manage it and to allow you playing some financial games inside of it.
 Once you've entered the financial district, you can play some casino games, maybe win, or maybe lose. The bank will generously give you money when you'll enter the guild.
 
-Unfortunately, if you are in bankerupt, the bank will exclude you forever from the financial district (i.e. ban). Don't hope to be allowed again, the bot won't let you enter again.
+Unfortunately, if you are in bankrupt, the bank will exclude you forever from the financial district (i.e. ban). Don't hope to be allowed again, the bot won't let you enter again.
 
 There is no real money, all of features using "money", use virtual money with no conversion from real money to virtual money or from virtual money to real money. This is just a game !
 
