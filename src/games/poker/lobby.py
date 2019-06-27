@@ -35,6 +35,8 @@ class PokerLobby:
         self.logger.info("user %d joining poker lobby %s", user.id, str(self.channel))
 
     async def leave(self,user,delete=True):
+        if self.curround is not None:
+            await self.curround.fold(user)
         usrlist = await self.usertable.fetch()
         for usr in usrlist:
             if usr[0] == str(user.id): break
@@ -60,5 +62,5 @@ class PokerLobby:
     def startround(self):
         if self.curnbrround < self.round:
             self.curnbrround += 1
-            self.round = PokerRound(self)
-            return self.round
+            self.curround = PokerRound(self)
+            return self.curround

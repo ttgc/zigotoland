@@ -36,7 +36,7 @@ class PokerRound:
         self.playing = self.playerlist[self.indexplaying]
         return self.playing, changeTour
 
-    def fold(self,player):
+    async def fold(self,player):
         self.lobby.player[player] -= self.curbet[player]
         del(self.curbet[player])
         del(self.cards[player])
@@ -44,7 +44,7 @@ class PokerRound:
         await self.lobby.channel.send("{} is folding".format(player.mention))
         return self.nextplayer()
 
-    def follow(self,player):
+    async def follow(self,player):
         self.curbet[player] = self.curbet[self.playerlist[self.indexplaying-1]]
         self.totalbet = 0
         for i in self.curbet.values():
@@ -52,7 +52,7 @@ class PokerRound:
         await self.lobby.channel.send("{} is following".format(player.mention))
         return self.nextplayer()
 
-    def raise_(self,player,amount):
+    async def raise_(self,player,amount):
         self.curbet[player] += amount
         self.totalbet = 0
         for i in self.curbet.values():
@@ -60,24 +60,27 @@ class PokerRound:
         await self.lobby.channel.send("{} is raising the bet with {} more coins".format(player.mention, amount))
         return self.nextplayer()
 
-    async def inform_player(self):
+    async def inform_player(self, supset=[]):
         for i,k in self.cards.items():
-            combi = CardSet.combination[CardSet.retrieveCombination(k)])
-            await i.send("Your current hand combination is : {}".format(combi)
+            combi = CardSet.combination[CardSet.retrieveCombination(k+supset)]
+            await i.send("Your current hand combination is : {}".format(combi))
             await asyncio.sleep(0.2)
 
     async def endturn(self):
-        await inform_player()
         if self.tour == 2:
+            await inform_player(self.flop)
             await self.lobby.channel.send("End of turn 1 : The flop is :\n```\n{}\n{}\n{}\n```".format(self.flop[0],self.flop[1],self.flop[2]))
             return self.flop
         elif self.tour == 3:
-            await self.lobby.channel.send("End of turn 2 : The turn is : `{}`".format(self.turn[0])
+            await inform_player(self.flop + self.turn)
+            await self.lobby.channel.send("End of turn 2 : The turn is : `{}`".format(self.turn[0]))
             return self.turn
         elif self.tour == 4:
-            await self.lobby.channel.send("End of turn 3 : The river is : `{}`".format(self.river[0])
+            await inform_player(self.flop + self.turn + self.river)
+            await self.lobby.channel.send("End of turn 3 : The river is : `{}`".format(self.river[0]))
             return self.river
         elif self.tour == 5:
+            await inform_player(self.flop + self.turn + self.river)
             end = await self.endgame()
             return end
 
@@ -90,14 +93,14 @@ class PokerRound:
             if winner is None or (CardSet.compare(winnerCard, cards) > 0 and i != winner):
                 winner = i
                 winnerCard = cards
-            self.lobby.channel.send("Player {} has the following cards :", self.cards[i][0], self.cards[i][1])
+            self.lobby.channel.send("Player {} has the following cards : `{}` and `{}`".format(self.cards[i][0], self.cards[i][1]))
         self.lobby.player[winner] += self.totalbet
         clearlist = []
         for i,k in self.lobby.player.items():
             if k <= 0:
                 await self.lobby.leave(i,False)
                 clearlist.append(i)
-        await self.lobby.channel.send("End of the round !\nThe winner is {} with {} and earned {} coins".format(winner, CardSet.combination[CardSet.retrieveCombination(winnerCard)], self.totalbet)
+        await self.lobby.channel.send("End of the round !\nThe winner is {} with {} and earned {} coins".format(winner, CardSet.combination[CardSet.retrieveCombination(winnerCard)], self.totalbet))
         await asyncio.sleep(1)
         for i in clearlist: del(self.lobby.player[i])
         self.lobby.curround = None
