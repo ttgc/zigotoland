@@ -60,7 +60,7 @@ class Games(commands.Cog):
     async def poker_lobby(self, ctx): pass
 
     @poker_lobby.command(name="create", aliases=["+","new"])
-    async def poker_lobby_create(self, ctx, name, initial_bet: int, round: typing.Optional[int] = 10):
+    async def poker_lobby_create(self, ctx, name, buy_in: int, round: typing.Optional[int] = 10):
         """Create a lobby for playing poker game. Other players could join with `/poker lobby join`"""
         cat = discord.utils.get(ctx.guild.categories, name="poker")
         chan = None
