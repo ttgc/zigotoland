@@ -4,6 +4,7 @@
 from discord.ext import commands
 from src.discord.checks import *
 from src.utils.config import *
+from src.games.poker.lobby import *
 import logging, sys
 
 class Utils(commands.Cog):
@@ -36,6 +37,8 @@ class Utils(commands.Cog):
         if answer is None:
             await ctx.message.channel.send("your request has timeout")
         else:
+            for k in PokerLobby.instances.values():
+                k.disband()
             self.logger.warning("Shutdown requested by %s",str(ctx.message.author))
             await self.bot.logout()
             await client.close()
