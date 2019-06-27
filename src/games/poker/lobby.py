@@ -16,7 +16,7 @@ class PokerLobby:
         self.channel = channel
         self.db = Database(bot,logger,PokerLobby.config.guild.id,"selfguild")
         self.usertable = Table(self.db,"user")
-        self.round = round
+        self.round = round_
         self.player = {}
         self.perms = discord.PermissionOverwrite()
         self.perms.send_messages = True
