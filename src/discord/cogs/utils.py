@@ -74,3 +74,33 @@ class Utils(commands.Cog):
         self.logger.info("Created invite to self-guild : %s",invite.url)
         print(invite.url)
         await ctx.channel.send("Welcome to the financial district : \n{}".format(invite.url))
+
+    @commands.check(check_inserv)
+    @commands.command(aliases=["money", "coins"])
+    async def wallet(self,ctx):
+        db = Database(self.bot,self.logger,ctx.guild.id,"selfguild")
+        usertable = Table(db,"user")
+        userlist = await usertable.fetch()
+        for user in userlist:
+            if str(ctx.author.id) == user[0]: break
+
+        money = int(user[1])
+        if money <= 1000:
+            color = int("FF0000",16)
+            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/7/76/Normal-midas.jpg/revision/latest?cb=20110612201523"
+        elif money <= 10000:
+            color = int("FFFF00",16)
+            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/9/9a/Gold-midas.jpg/revision/latest?cb=20110612201743"
+        elif money <= 1000000:
+            color = int('3CD070',16)
+            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/d/db/Platinum-midas.jpg/revision/latest?cb=20110612202020"
+        else:
+            color = int('010101',16)
+            card = "https://vignette.wikia.nocookie.net/themoneyofsoulandpossibilitycontrol/images/9/96/Dark-midas.jpg/revision/latest?cb=20110612202144"
+
+        embd = discord.Embed(title="Current wallet",description="Financial district bank account information",colour=discord.Color(color))
+        embd.set_footer(text="Bot created by Ttgc and Trakozz",icon_url=self.bot.user.avatar_url)
+        embd.set_thumbnail(url="card")
+        embd.set_author(name=str(ctx.author),icon_url=ctx.author.avatar.avatar_url)
+
+        await ctx.channel.send(embed=embd)
