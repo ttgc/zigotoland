@@ -146,7 +146,7 @@ class Pennymachine(commands.Cog):
 
         await asyncio.sleep(0.5)
         final_res = "{}{}{}".format(res1, res2, res3)
-        await ctx.channel.edit(content=final_res)
+        await msg.edit(content=final_res)
 
         if draw1 == draw2 and draw2 == draw3:
             if draw1 == 7:
@@ -168,7 +168,7 @@ class Pennymachine(commands.Cog):
                 await ctx.channel.send("You win ! you have earned : {} coins".format(bet*money_up2))
                 coins += (bet*money_up2)
             elif draw1 == 1:
-                await ctx.channel.send("You win ! you have earned : {} coins".format(bet*math.floor(bet*money_up1)))
+                await ctx.channel.send("You win ! you have earned : {} coins".format(math.floor(bet*money_up1)))
                 coins += math.floor(bet*money_up1)
         else:
             await ctx.channel.send("You lose !")
