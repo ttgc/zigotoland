@@ -15,10 +15,12 @@ from src.utils.config import *
 from src.discord.database.database import *
 from src.discord.database.table import *
 from src.discord.help import *
+from src.discord.manage import *
 
 # import cogs
 from src.discord.cogs.utils import *
 from src.discord.cogs.games import *
+from src.discord.cogs.economy import *
 
 # =============== INIT ===============
 
@@ -45,6 +47,7 @@ client = discord.ext.commands.Bot('/',case_insensitive=True,help_command=Help())
 async def check_money(ctx):
     global logger, client, config
     if ctx.guild == config.guild:
+        gold, plat, dark = await manage_roles(ctx, logger)
         db = Database(client,logger,config.guild.id,"selfguild")
         userdb = Table(db,"user")
         userlist = await userdb.fetch()
@@ -52,7 +55,10 @@ async def check_money(ctx):
             if int(i[0]) == ctx.author.id and int(i[1]) < 0:
                 await ctx.author.send("You lose ! You are bankrupt !")
                 await ctx.channel.send("{} is bankrupt and has been exiled from financial district".format(str(ctx.author)))
-                await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=1)
+                await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=0)
+            elif int(i[0]) == ctx.author.id:
+                money = int(i[1])
+                await update_member_status(ctx, money, gold, plat, dark)
 
 # events
 @client.event
@@ -106,12 +112,15 @@ async def on_member_join(member):
     if member.guild == config.guild:
         db = Database(client,logger,config.guild.id,"selfguild")
         userdb = Table(db,"user")
+        userlist = await userdb.fetch()
+        for i in userlist:
+            if i[0] == str(member.id): return
         await userdb.add_row(str(member.id),"100000")
 
 @client.event
-async def on_member_remove(member):
+async def on_member_ban(guild, user):
     global logger, client, config
-    if member.guild == config.guild:
+    if guild == config.guild:
         db = Database(client,logger,config.guild.id,"selfguild")
         userdb = Table(db,"user")
         await userdb.delete_row(str(member.id))
@@ -141,7 +150,8 @@ async def on_ready():
                                 mentionable=True, reason="Creating admin role")
         logger.info("self guild %d created successful", guild.id)
         db = await Database.create(client,logger,guild.id,"selfguild")
-        await Table.create(db,"user") # (id, money)
+        table = await Table.create(db,"user") # (id, money)
+        await table.add_row(str(-1),"0")
         logger.warning("need reboot with 'load' option")
         await client.logout()
         await client.close()
@@ -167,6 +177,7 @@ async def main():
     global TOKEN, logger, client
     client.add_cog(Utils(client,logger))
     client.add_cog(Games(client,logger))
+    client.add_cog(Economy(client,logger))
     await client.login(TOKEN)
     await client.connect()
 
