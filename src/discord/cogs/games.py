@@ -8,6 +8,7 @@ from src.discord.database.database import *
 from src.discord.database.table import *
 from src.games.poker.lobby import *
 from src.games.poker.poker import *
+from src.games.pennymachine import *
 from random import randint, choice, shuffle
 import logging
 import asyncio
@@ -121,3 +122,9 @@ class Games(commands.Cog):
         await game(ctx, self.bot, self.logger, lobby, kickifnotready)
         await asyncio.sleep(5)
         await lobby.check_auto_disband()
+
+    @commands.check(check_inserv)
+    @commands.command()
+    async def pennymachine(self, ctx, bet: int):
+        """Make your bet and pray for the win"""
+        await pennymachine_game(self.bot, self.logger, ctx, bet)
