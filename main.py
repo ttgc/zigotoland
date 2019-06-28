@@ -15,6 +15,7 @@ from src.utils.config import *
 from src.discord.database.database import *
 from src.discord.database.table import *
 from src.discord.help import *
+from src.discord.manage import *
 
 # import cogs
 from src.discord.cogs.utils import *
@@ -45,6 +46,7 @@ client = discord.ext.commands.Bot('/',case_insensitive=True,help_command=Help())
 async def check_money(ctx):
     global logger, client, config
     if ctx.guild == config.guild:
+        gold, plat, dark = await manage_roles(ctx, logger)
         db = Database(client,logger,config.guild.id,"selfguild")
         userdb = Table(db,"user")
         userlist = await userdb.fetch()
@@ -53,6 +55,36 @@ async def check_money(ctx):
                 await ctx.author.send("You lose ! You are bankrupt !")
                 await ctx.channel.send("{} is bankrupt and has been exiled from financial district".format(str(ctx.author)))
                 await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=1)
+            elif int(i[0]) == ctx.author.id:
+                money = int(i[1])
+                if money <= 1000:
+                    if gold in ctx.author.roles:
+                        await ctx.author.remove_roles(gold,reason="Removing gold role from standard member")
+                    if plat in ctx.author.roles:
+                        await ctx.author.remove_roles(plat,reason="Removing plat role from standard member")
+                    if dark in ctx.author.roles:
+                        await ctx.author.remove_roles(dark,reason="Removing dark role from standard member")
+                elif money <= 100000:
+                    if not gold in ctx.author.roles:
+                        await ctx.author.add_roles(gold,reason="Adding gold role from gold member")
+                    if plat in ctx.author.roles:
+                        await ctx.author.remove_roles(plat,reason="Removing plat role from gold member")
+                    if dark in ctx.author.roles:
+                        await ctx.author.remove_roles(dark,reason="Removing dark role from gold member")
+                elif money <= 10000000:
+                    if gold in ctx.author.roles:
+                        await ctx.author.remove_roles(gold,reason="Removing gold role from platinium member")
+                    if not plat in ctx.author.roles:
+                        await ctx.author.add_roles(plat,reason="Adding plat role from platinium member")
+                    if dark in ctx.author.roles:
+                        await ctx.author.remove_roles(dark,reason="Removing dark role from platinium member")
+                else:
+                    if gold in ctx.author.roles:
+                        await ctx.author.remove_roles(gold,reason="Removing gold role from darkness member")
+                    if plat in ctx.author.roles:
+                        await ctx.author.add_roles(plat,reason="Removing plat role from darkness member")
+                    if not dark in ctx.author.roles:
+                        await ctx.author.remove_roles(dark,reason="Adding dark role from darkness member")
 
 # events
 @client.event
