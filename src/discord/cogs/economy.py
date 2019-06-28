@@ -8,7 +8,6 @@ from src.discord.database.database import *
 from src.discord.database.table import *
 from src.discord.manage import *
 import logging
-import math
 
 class Economy(commands.Cog):
     def __init__(self,bot,logger):
@@ -109,7 +108,7 @@ class Economy(commands.Cog):
         self.logger.info("Rotary press activated by %d to print %d dollars",ctx.author.id,amount)
         await ctx.channel.send("{} The rotary press has been activated by {} to print {} dollars for each account".format(ctx.guild.default_role.mention,ctx.author.mention,amount))
 
-    @rotarypress.command(name="getmoney")
+    @rotarypress.command(name="reverse")
     async def rotarypress_reverse(self,ctx,amount: int):
         """Reserved to darkness members.
         Reverse rotation of the rotary press, printed money from the rotary press is taken back from accounts
@@ -123,7 +122,7 @@ class Economy(commands.Cog):
         usertable = Table(db,"user")
         userlist = await usertable.fetch()
         for srv in userlist:
-            if srv[0] == -1: break
+            if srv[0] == "-1": break
         if int(srv[1]) + raiseindicator > 0:
             await ctx.channel.send("You cannot return more money than previously printed by the rotary press")
             return
