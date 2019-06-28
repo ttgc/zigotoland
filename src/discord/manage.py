@@ -25,11 +25,11 @@ async def manage_roles(ctx, logger):
                         hoist=True, mentionable=True, reason="Creating Platinium role")
         logger.info("Create Platinium role : %d",plat.id)
         reorganize = True
-    if plat is None:
-        plat = await ctx.guild.create_role(name="Platinium",
+    if dark is None:
+        dark = await ctx.guild.create_role(name="Platinium",
                         permissions=plat.permissions, color=discord.Color(int("010101",16)),
                         hoist=True, mentionable=True, reason="Creating Darkness role")
-        logger.info("Create Darkness role : %d",plat.id)
+        logger.info("Create Darkness role : %d",dark.id)
         reorganize = True
     if reorganize:
         position = {"Gold":0, "Platinium":1, "Darkness": 2}
