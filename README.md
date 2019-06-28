@@ -53,3 +53,4 @@ The bot use the prefix : `/` to execute commands
 - `/poker lobby leave` : Leave the current lobby where you are. Only works when executed in a poker lobby
 - `/poker lobby disband` : Disband the current lobby where you are. Only works when executed in a poker lobby by the owner of the lobby
 - `/poker start [kick_if_not_ready]` : Start a poker round in the current lobby where you are. Only works when executed by lobby owner.
+- `/pennymachine <bet>` : Play to the pennymachine and pray for winning
