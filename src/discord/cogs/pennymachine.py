@@ -168,8 +168,8 @@ class Pennymachine(commands.Cog):
                 await ctx.channel.send("You win ! you have earned : {} coins".format(bet*money_up2))
                 coins += (bet*money_up2)
             elif draw1 == 1:
-                await ctx.channel.send("You win ! you have earned : {} coins".format(bet*money_up1))
-                coins += (bet*money_up1)
+                await ctx.channel.send("You win ! you have earned : {} coins".format(bet*math.floor(bet*money_up1)))
+                coins += math.floor(bet*money_up1)
         else:
             await ctx.channel.send("You lose !")
 
