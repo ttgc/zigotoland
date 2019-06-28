@@ -2,6 +2,7 @@
 #-*-coding:utf-8-*-
 
 from src.utils.config import *
+from src.games.poker.lobby import *
 
 def check_botowner(ctx):
     config = Config()
@@ -10,3 +11,10 @@ def check_botowner(ctx):
 def check_inserv(ctx):
     config = Config()
     return (ctx.guild == config.guild)
+
+def check_inpokerlobby(ctx):
+    return ctx.channel in PokerLobby.instances
+
+def check_pokerlobbyowner(ctx):
+    if not check_inpokerlobby(ctx): return False
+    return PokerLobby.instances[ctx.channel].owner == ctx.author

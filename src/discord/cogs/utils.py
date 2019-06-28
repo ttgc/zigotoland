@@ -4,6 +4,7 @@
 from discord.ext import commands
 from src.discord.checks import *
 from src.utils.config import *
+from src.games.poker.lobby import *
 import logging, sys
 
 class Utils(commands.Cog):
@@ -29,13 +30,17 @@ class Utils(commands.Cog):
     @commands.check(check_botowner)
     @commands.command()
     async def shutdown(self,ctx):
-        await ctx.message.channel.send("You are requesting a shutdown, please ensure that you want to performe it by typing `confirm`")
+        await ctx.message.channel.send("You are requesting a shutdown, please ensure that you want to perform it by typing `confirm`")
         chk = lambda m: m.author == ctx.message.author and m.channel == ctx.message.channel and m.content.lower() == 'confirm'
         try: answer = await self.bot.wait_for('message',check=chk,timeout=60)
         except asyncio.TimeoutError: answer = None
         if answer is None:
             await ctx.message.channel.send("your request has timeout")
         else:
+            pokerlobbyls = []
+            for k in PokerLobby.instances.values(): pokerlobbyls.append(k)
+            for i in pokerlobbyls:
+                await i.disband()
             self.logger.warning("Shutdown requested by %s",str(ctx.message.author))
             await self.bot.logout()
             await client.close()
@@ -44,7 +49,7 @@ class Utils(commands.Cog):
     @commands.check(check_botowner)
     @commands.command()
     async def destroy(self,ctx):
-        await ctx.message.channel.send("You are requesting to destroy the current financial district server, please ensure that you want to performe it by typing `confirm`")
+        await ctx.message.channel.send("You are requesting to destroy the current financial district server, please ensure that you want to perform it by typing `confirm`")
         chk = lambda m: m.author == ctx.message.author and m.channel == ctx.message.channel and m.content.lower() == 'confirm'
         try: answer = await self.bot.wait_for('message',check=chk,timeout=60)
         except asyncio.TimeoutError: answer = None
