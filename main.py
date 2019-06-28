@@ -57,34 +57,7 @@ async def check_money(ctx):
                 await config.guild.ban(ctx.author,reason="bankrupt",delete_message_days=1)
             elif int(i[0]) == ctx.author.id:
                 money = int(i[1])
-                if money <= 1000:
-                    if gold in ctx.author.roles:
-                        await ctx.author.remove_roles(gold,reason="Removing gold role from standard member")
-                    if plat in ctx.author.roles:
-                        await ctx.author.remove_roles(plat,reason="Removing plat role from standard member")
-                    if dark in ctx.author.roles:
-                        await ctx.author.remove_roles(dark,reason="Removing dark role from standard member")
-                elif money <= 100000:
-                    if not gold in ctx.author.roles:
-                        await ctx.author.add_roles(gold,reason="Adding gold role from gold member")
-                    if plat in ctx.author.roles:
-                        await ctx.author.remove_roles(plat,reason="Removing plat role from gold member")
-                    if dark in ctx.author.roles:
-                        await ctx.author.remove_roles(dark,reason="Removing dark role from gold member")
-                elif money <= 10000000:
-                    if gold in ctx.author.roles:
-                        await ctx.author.remove_roles(gold,reason="Removing gold role from platinium member")
-                    if not plat in ctx.author.roles:
-                        await ctx.author.add_roles(plat,reason="Adding plat role from platinium member")
-                    if dark in ctx.author.roles:
-                        await ctx.author.remove_roles(dark,reason="Removing dark role from platinium member")
-                else:
-                    if gold in ctx.author.roles:
-                        await ctx.author.remove_roles(gold,reason="Removing gold role from darkness member")
-                    if plat in ctx.author.roles:
-                        await ctx.author.add_roles(plat,reason="Removing plat role from darkness member")
-                    if not dark in ctx.author.roles:
-                        await ctx.author.remove_roles(dark,reason="Adding dark role from darkness member")
+                await update_member_status(ctx, money, gold, plat, dark)
 
 # events
 @client.event
