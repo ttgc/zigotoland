@@ -18,12 +18,16 @@ class Utils(commands.Cog):
         self.logger.log(logging.DEBUG+1,"running debug instruction : %s",arg.replace("```python","").replace("```",""))
         exec(arg.replace("```python","").replace("```",""))
 
-    @commands.check(check_botowner)
     @commands.command()
     async def invite(self,ctx):
-        botaskperm = discord.Permissions().all()
-        botaskperm.administrator = botaskperm.manage_channels = botaskperm.manage_guild = botaskperm.manage_webhooks = botaskperm.manage_emojis = botaskperm.manage_nicknames = botaskperm.move_members = False
+        botaskperm = discord.Permissions(519232)
         url = discord.utils.oauth_url(str(self.bot.user.id), botaskperm)
+        embd = discord.Embed(title="Zigoto Bot",description="Invite the bot in your server !",colour=discord.Color(int('3CD070',16)),url=url)
+        embd.set_footer(text="Bot created by Ttgc and Trakozz",icon_url=self.bot.user.avatar_url)
+        embd.set_image(url=self.bot.user.avatar_url)
+        embd.set_author(name="Zigoto Team",icon_url="https://www.2tout2rien.fr/wp-content/uploads/2012/12/Pingouin.jpg",url=url)
+        embd.add_field(name="Currently on :",value=str(len(self.bot.guilds))+" servers",inline=True)
+        await ctx.message.channel.send(embed=embd)
         self.logger.info("invite url : %s", url)
         print(url)
 

@@ -39,6 +39,10 @@ The bot use the prefix : `/` to execute commands
 - `/destroy` **(Bot owner only)** : Destroy definitively the self-managed guild. This cannot be undone.
 - `/opendeal` : Get the invite to the financial district (self-managed guild)
 
+## Economy commands (only in self managed guild)
+- `/wallet` : Show your current wallet
+- `/transfer <amount> <target>` : Transfer money from your wallet to the target's wallet
+
 ## Games commands (only in self managed guild)
 - `/roulette <bet> <area>` : Play roulette game, set up your bet and pray for the ball stops on your selected area. There are 18 areas (from 1 to 18) for each colors, and there are only two colors : R(ed) and B(lack)
 - `/poker lobby create <name>` : Create a lobby for playing poker, other players can join it with the `poker lobby join` command (see below)
