@@ -40,7 +40,9 @@ class PokerLobby:
         usrlist = await self.usertable.fetch()
         for usr in usrlist:
             if usr[0] == str(user.id): break
-        moneyEarned = self.player[user] - self.minimalBet
+        for srvind in usrlist:
+            if "-1" == srvind[0]: break
+        moneyEarned = self.player[user] - self.minimalBet - int(srvind[1])
         await self.usertable.update_row(str(user.id), str(int(usr[1]) + moneyEarned))
         if delete: del(self.player[user])
         await self.channel.send("{} left the table".format(user.mention))

@@ -33,6 +33,8 @@ class Games(commands.Cog):
         users = await usertable.fetch()
         for user in users:
             if user[0] == str(ctx.author.id): break
+        for srvind in users:
+            if "-1" == srvind[0]: break
         coins = int(user[1]) - bet
         avalaible = ["R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","R16","R17","R18",
                     "B1","B2","B3","B4","B5","B6","B7","B8","B9","B10","B11","B12","B13","B14","B15","B16","B17","B18"]
@@ -47,8 +49,8 @@ class Games(commands.Cog):
         await msg.edit(content=formated)
         await asyncio.sleep(1)
         if color == validColor and number == validNumber:
-            await ctx.channel.send("You win ! you have earned : {} coins".format(bet*10))
-            coins += (bet*10)
+            await ctx.channel.send("You win ! you have earned : {} coins".format((bet*10) - int(srvind[1])))
+            coins += ((bet*10) - int(srvind[1]))
         else:
             await ctx.channel.send("You lose !")
         await usertable.update_row(user[0],str(coins))
