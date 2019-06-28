@@ -24,21 +24,13 @@ class Pennymachine(commands.Cog):
     async def pennymachine(self, ctx, bet: int ):
         """Make your bet and pray for the win"""
 
-        money_up1 = 0
-        money_up2 = 2
-        money_up3 = 4
-        money_up4 = 6
-        money_up5 = 10
-        money_up6 = 100
+        money_up1 = 0.5
+        money_up2 = 1
+        money_up3 = 2
+        money_up4 = 4
+        money_up5 = 8
+        money_up6 = 10
         money_up7 = 1000
-        money_down1 = -7
-        money_down2 = -6
-        money_down3 = -5
-        money_down4 = -4
-        money_down5 = -3
-        money_down6 = -2
-        money_down7 = -1
-        full_lose = -10
 
         db = Database(self.bot,self.logger,ctx.guild.id,"selfguild")
         usertable = Table(db,"user")
@@ -178,30 +170,7 @@ class Pennymachine(commands.Cog):
             elif draw1 == 1:
                 await ctx.channel.send("You win ! you have earned : {} coins".format(bet*money_up1))
                 coins += (bet*money_up1)
-        elif draw1 == draw2 or draw1 == draw3 or draw2 == draw3:
-            if draw1 == 7:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down7))
-                coins += (bet*money_down5)
-            elif draw1 == 6:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down6))
-                coins += (bet*money_down5)
-            elif draw1 == 5:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down5))
-                coins += (bet*money_down5)
-            elif draw1 == 4:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down4))
-                coins += (bet*money_down4)
-            elif draw1 == 3:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down3))
-                coins += (bet*money_down3)
-            elif draw1 == 2:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down2))
-                coins += (bet*money_down2)
-            elif draw1 == 1:
-                await ctx.channel.send("You win ! you have lost : {} coins".format(bet*money_down1))
-                coins += (bet*money_down1)
         else:
-            await ctx.channel.send("You lose ! you have lost : {} coins".format(bet*full_lose))
-            coins += (bet*full_lose)
+            await ctx.channel.send("You lose !")
 
         await usertable.update_row(user[0],str(coins))
