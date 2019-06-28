@@ -59,6 +59,7 @@ class PokerRound:
         return self.nextplayer()
 
     async def raise_(self,player,amount):
+        amount = abs(amount)
         self.curbet[player] = self.curbet[self.playerlist[self.indexplaying-1]]
         self.curbet[player] += amount
         self.totalbet = 0

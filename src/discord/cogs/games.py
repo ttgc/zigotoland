@@ -25,6 +25,7 @@ class Games(commands.Cog):
         The area (color+number) is given as following : R17 for the red color and number 17
         There are 2 colors : R(ed) and B(lack)
         And there are 18 numbers from 1 to 18 included"""
+        bet = abs(bet)
         color, number = area
         validColor, validNumber = choice(["red","black"]), randint(0,18)
         db = Database(self.bot,self.logger,ctx.guild.id,"selfguild")
@@ -62,6 +63,7 @@ class Games(commands.Cog):
     @poker_lobby.command(name="create", aliases=["+","new"])
     async def poker_lobby_create(self, ctx, name, buy_in: int, round: typing.Optional[int] = 10):
         """Create a lobby for playing poker game. Other players could join with `/poker lobby join`"""
+        buy_in = abs(buy_in)
         cat = discord.utils.get(ctx.guild.categories, name="poker")
         chan = None
         if cat is None:
