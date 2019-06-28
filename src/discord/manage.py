@@ -26,16 +26,15 @@ async def manage_roles(ctx, logger):
         logger.info("Create Platinium role : %d",plat.id)
         reorganize = True
     if dark is None:
-        dark = await ctx.guild.create_role(name="Platinium",
+        dark = await ctx.guild.create_role(name="Darkness",
                         permissions=plat.permissions, color=discord.Color(int("010101",16)),
                         hoist=True, mentionable=True, reason="Creating Darkness role")
         logger.info("Create Darkness role : %d",dark.id)
         reorganize = True
     if reorganize:
-        position = {"Gold":0, "Platinium":1, "Darkness": 2}
-        for i in ctx.guild.roles:
-            if i.name in position:
-                await i.edit(position=position[i.name])
+        await gold.edit(position=ctx.guild.default_role.position+1)
+        await plat.edit(position=gold.position+1)
+        await dark.edit(position=plat.position+1)
     return gold, plat, dark
 
 async def update_member_status(ctx, money, gold, plat, dark):
