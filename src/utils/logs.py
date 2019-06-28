@@ -7,7 +7,10 @@ class DebugFilter(logging.Filter):
     def filter(self,record):
         return record.levelno == logging.DEBUG+1
 
+global logger
+
 def initlogs():
+    global logger
     if not os.access("Logs",os.F_OK):
         os.mkdir("Logs")
     logger = logging.getLogger('discord')
@@ -31,4 +34,8 @@ def initlogs():
     handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
     handler.addFilter(DebugFilter())
     logger.addHandler(handler)
+    return logger
+
+def getlogger():
+    global logger
     return logger
